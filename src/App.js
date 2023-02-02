@@ -5,6 +5,8 @@ import Category from "./pages/category/Category";
 import Checkout from "./pages/checkout/Checkout";
 import Detail from "./pages/detail/Detail";
 import Home from "./pages/home/Home";
+import Custommer from "./pages/custommer/Custommer";
+import Seller from "./pages/seller/Seller";
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/detail/:id" element={<Detail />} />
         <Route path="/category/id" element={<Category />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/custommer" element={<Custommer />} />
+        <Route path="/seller" element={<Seller />} />
       </Routes>
     </BrowserRouter>
   );
