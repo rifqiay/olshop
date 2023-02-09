@@ -5,7 +5,10 @@ import noProductIcon from "../../../asset/img/no-product.png";
 
 const MyProduct = () => {
   return (
-    <div className="bg-white w-10/12 mx-auto border border-black rounded-md shadow-lg">
+    <div
+      className="bg-white w-10/12 mx-auto border border-black rounded-md shadow-lg"
+      data-aos="fade-left"
+    >
       <div className="p-5">
         <h1 className="text-2xl font-medium">My product</h1>
         <div className="flex gap-10 text-slate-500 mt-5">

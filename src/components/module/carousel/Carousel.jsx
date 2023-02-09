@@ -11,7 +11,7 @@ import { Navigation, Pagination } from "swiper";
 
 const Carousel = () => {
   return (
-    <>
+    <div className="h-52 promotion">
       <Swiper
         slidesPerView={"auto"}
         centeredSlides={true}
@@ -23,57 +23,43 @@ const Carousel = () => {
         navigation={true}
         modules={[Navigation, Pagination]}
         className="mySwiper"
+        breakpoints={{
+          320: {
+            width: 320,
+            slidesPerView: 1,
+          },
+        }}
       >
         <SwiperSlide>
           <img
             src="https://images.unsplash.com/photo-1495105787522-5334e3ffa0ef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
             alt="promo1"
-            className="w-[41rem] h-[10rem]"
-          />
-          <img
-            src="https://images.unsplash.com/photo-1495105787522-5334e3ffa0ef?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-            alt="promo1"
-            className="w-[41rem] h-[10rem]"
+            className="w-[45rem] h-[10rem]"
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
             src="https://images.unsplash.com/photo-1593885836939-dcadae975b2e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
             alt="promo1"
-            className="w-[41rem] h-[10rem]"
-          />
-          <img
-            src="https://images.unsplash.com/photo-1593885836939-dcadae975b2e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-            alt="promo1"
-            className="w-[41rem] h-[10rem]"
+            className="w-[45rem] h-[10rem]"
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
             src="https://images.unsplash.com/photo-1466204801502-90dae6227a86?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
             alt="promo1"
-            className="w-[41rem] h-[10rem]"
-          />
-          <img
-            src="https://images.unsplash.com/photo-1466204801502-90dae6227a86?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-            alt="promo1"
-            className="w-[41rem] h-[10rem]"
+            className="w-[45rem] h-[10rem]"
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
             src="https://images.unsplash.com/photo-1593885836939-dcadae975b2e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
             alt="promo1"
-            className="w-[41rem] h-[10rem]"
-          />
-          <img
-            src="https://images.unsplash.com/photo-1593885836939-dcadae975b2e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-            alt="promo1"
-            className="w-[41rem] h-[10rem]"
+            className="w-[45rem] h-[10rem]"
           />
         </SwiperSlide>
       </Swiper>
-    </>
+    </div>
   );
 };
 

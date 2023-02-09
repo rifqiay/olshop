@@ -1,6 +1,6 @@
 import React from "react";
 
-const AccordionStore = ({ icon, title, subtitle }) => {
+const AccordionStore = ({ icon, title, subtitle, setActiveTab, activeTab }) => {
   return (
     <>
       <div>
@@ -10,12 +10,21 @@ const AccordionStore = ({ icon, title, subtitle }) => {
         <input type="checkbox" id="item1" class="peer hidden" />
         <label
           htmlFor="item1"
-          className="flex justify-between hover:cursor-pointer peer-checked:text-blue-600"
+          className="flex justify-between hover:cursor-pointer peer-checked:text-black"
         >
           {title}
         </label>
         <div class="border-t mt-3 hidden peer-checked:block transition-all">
-          <p>{subtitle}</p>
+          <p
+            onClick={() => setActiveTab("tab1")}
+            className={
+              activeTab === "tab1"
+                ? "flex justify-between hover:cursor-pointer text-black"
+                : "flex justify-between hover:cursor-pointer"
+            }
+          >
+            {subtitle}
+          </p>
         </div>
       </div>
     </>

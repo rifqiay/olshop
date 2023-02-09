@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import img from "../../../asset/img/img.jpeg";
 import Button from "../../base/button";
 import Input from "../../base/input/Input";
 
 const MyStore = () => {
+  const [prevImg, setPrevImg] = useState(null);
+
+  const handleChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setPrevImg(reader.result);
+    };
+
+    reader.readAsDataURL(file);
+  };
   return (
-    <div className="bg-white w-10/12 mx-auto border border-black rounded-md shadow-lg">
+    <div
+      className="bg-white w-10/12 mx-auto border border-black rounded-md shadow-lg"
+      data-aos="fade-left"
+    >
       <div className="p-5">
         <h1 className="text-2xl font-medium">My profile store</h1>
         <p className="text-sm text-slate-500 mt-2">
@@ -71,11 +86,16 @@ const MyStore = () => {
         <div>
           <div className="border-l-2">
             <img
-              src={img}
+              src={prevImg ? prevImg : img}
               alt="profil"
-              className="w-24 h-24 rounded-full mx-auto mt-7"
+              className="w-24 h-24 rounded-full mx-auto mt-7 object-cover"
             />
-            <input type="file" className="hidden" id="photos" />
+            <input
+              type="file"
+              className="hidden"
+              id="photos"
+              onChange={handleChange}
+            />
             <label
               htmlFor="photos"
               className="py-2 border-2 block mx-auto rounded-full mt-5 w-8/12 text-center hover:bg-slate-200 transition-all cursor-pointer"

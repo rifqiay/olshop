@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
 import Input from "../../base/input/Input";
 import Button from "../../base/button";
 import OtherPhoto from "../../base/other-photo/OtherPhoto";
@@ -6,8 +6,47 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 const SellingProduct = () => {
+  const [cover, setCover] = useState(null);
+  const [previews, setPreviews] = useState([]);
+
+  const handleChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setCover(reader.result);
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  const handlePhoto = (e) => {
+    const files = e.target.files;
+    const newPreviews = [];
+
+    for (let i = 0; i < 5; i++) {
+      const file = files[i];
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        newPreviews.push(reader.result);
+        if (newPreviews.length === files.length) {
+          setPreviews(newPreviews);
+        }
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemove = (index) => {
+    setPreviews((prevPreviews) => {
+      return prevPreviews.filter((_, i) => i !== index);
+    });
+  };
+
   return (
-    <div className="w-full flex flex-col gap-5">
+    <div className="w-full flex flex-col gap-5" data-aos="fade-left">
       <div className="bg-white w-10/12 mx-auto border  rounded-md shadow-lg">
         <h1 className="mt-5 ml-5 text-2xl font-medium">Inventory</h1>
         <hr className="my-5 border-t-2" />
@@ -63,7 +102,10 @@ const SellingProduct = () => {
         </div>
       </div>
 
-      <div className="bg-white w-10/12 mx-auto border  rounded-md shadow-lg">
+      <div
+        className="bg-white w-10/12 mx-auto border  rounded-md shadow-lg"
+        data-aos="fade-up"
+      >
         <h1 className="mt-5 ml-5 text-2xl font-medium">Photo of goods</h1>
         <hr className="my-5 border-t-2" />
         <div>
@@ -71,30 +113,60 @@ const SellingProduct = () => {
             className="w-11/12 mx-auto gap-3 border-dashed rounded-lg p-5
        mb-5 border-2 border-gray-300 flex items-center"
           >
-            <div className="bg-gray-400 w-32 h-32 flex justify-center items-center cursor-pointer">
-              <input
-                type="file"
-                name="photos1"
-                id="photo1"
-                className="hidden"
-              />
-              <label htmlFor="photo1">add</label>
-            </div>
+            <input
+              type="file"
+              name="photos1"
+              id="photo1"
+              className="hidden"
+              onChange={handleChange}
+            />
+            <label
+              htmlFor="photo1"
+              className={
+                cover
+                  ? "w-32 h-32 flex justify-center items-center cursor-pointer"
+                  : "bg-gray-100 w-32 h-32 rounded-lg flex justify-center items-center cursor-pointer"
+              }
+            >
+              {cover ? <img src={cover} alt="img" /> : <p>Cover</p>}
+            </label>
 
-            <OtherPhoto />
-            <OtherPhoto />
-            <OtherPhoto />
-            <OtherPhoto />
+            {previews?.map((item, index) => (
+              <Fragment key={index}>
+                <OtherPhoto
+                  item={item}
+                  handleChange={handlePhoto}
+                  handleRemove={handleRemove}
+                  index={index}
+                />
+              </Fragment>
+            ))}
+            <input
+              type="file"
+              multiple
+              onChange={handlePhoto}
+              id="multiple"
+              className="hidden"
+            />
+            {previews.length === 5 ? (
+              ""
+            ) : (
+              <label
+                htmlFor="multiple"
+                className="bg-gray-200 rounded-lg w-20 h-20 flex justify-center items-center cursor-pointer"
+              >
+                <p className="text-xs text-center">add max 5 photo</p>
+              </label>
+            )}
           </div>
           <hr className="w-11/12 mx-auto mt-3 border-t-2" />
-          <Button
-            name="Upload photos"
-            className="border w-36 py-2 rounded-full block mx-auto my-5 hover:bg-gray-200 transition-all"
-          />
         </div>
       </div>
 
-      <div className="bg-white w-10/12 h-[30rem] mx-auto border  rounded-md shadow-lg">
+      <div
+        className="bg-white w-10/12 h-[30rem] mx-auto border  rounded-md shadow-lg"
+        data-aos="fade-up"
+      >
         <h1 className="mt-5 ml-5 text-2xl font-medium">Description</h1>
         <hr className="mt-5 mb-10 border-t-2" />
         <div className="w-11/12 mx-auto mb-5">

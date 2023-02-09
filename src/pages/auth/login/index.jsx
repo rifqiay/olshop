@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import logo from "../../../asset/icon/logo.svg";
 import Button from "../../../components/base/button";
 import Input from "../../../components/base/input/Input";
 import eye1 from "../../../asset/icon/eye1.svg";
 import eye2 from "../../../asset/icon/eye2.svg";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [active, setActive] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -70,10 +71,17 @@ const Login = () => {
             <Button
               name="Login"
               className="bg-[#DB3022] p-3 w-full text-white mt-5 rounded-full hover:bg-[#f43928] transition-all"
+              onClick={() => navigate("/")}
             />
           </form>
           <p className="mt-10 text-center">
-            Dont't have Blanja account? Register
+            Dont't have Blanja account?{" "}
+            <Link
+              to="/register"
+              className="text-red-500 hover:text-red-600 hover:underline transition-all"
+            >
+              Register
+            </Link>
           </p>
         </div>
       </div>

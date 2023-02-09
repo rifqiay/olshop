@@ -3,6 +3,7 @@ import logo from "../../../asset/icon/logo.svg";
 import Button from "../../../components/base/button";
 import Custommer from "../../../components/module/custommer/Custommer";
 import Seller from "../../../components/module/seller/Seller";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [active, setActive] = useState(true);
@@ -63,7 +64,13 @@ const Register = () => {
             />
           </form>
           <p className="mt-10 text-center">
-            Already have Blanja account? Login
+            Already have Blanja account?{" "}
+            <Link
+              to="/login"
+              className="text-red-500 hover:text-red-600 hover:underline transition-all"
+            >
+              Login
+            </Link>
           </p>
         </div>
       </div>

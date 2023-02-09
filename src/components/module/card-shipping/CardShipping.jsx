@@ -3,7 +3,10 @@ import img from "../../../asset/img/img.jpeg";
 
 const CardShipping = () => {
   return (
-    <div className="border flex gap-5 p-3 rounded-md shadow-md">
+    <div
+      className="border flex gap-5 p-3 rounded-md shadow-md"
+      data-aos="fade-up"
+    >
       <div>
         <img src={img} alt="img" className="w-28 h-24 rounded-md" />
       </div>
