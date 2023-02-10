@@ -83,7 +83,7 @@ const Navbar = () => {
               </div>
               <p className="sm:hidden">Chats</p>
             </div>
-            <Link to="/seller" className="flex gap-2">
+            <Link to="/custommer" className="flex gap-2">
               <div>
                 <img
                   src={img}

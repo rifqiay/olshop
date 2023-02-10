@@ -17,9 +17,9 @@ const Custommer = () => {
   return (
     <>
       <Navbar />
-      <div className="grid grid-cols-4">
+      <div className="lg:grid grid-cols-4">
         <div className="mt-32">
-          <div className="w-9/12 ml-auto">
+          <div className="w-9/12 ml-5 lg:ml-auto">
             <div className="flex gap-3 items-center">
               <img
                 src={img}
@@ -29,7 +29,7 @@ const Custommer = () => {
               <p className="text-lg font-medium">Jhohanes Mikael</p>
             </div>
 
-            <div className="mt-12 flex flex-col gap-5 text-xl text-slate-500">
+            <div className="mt-12 flex lg:flex-col gap-5 text-xl text-slate-500 overflow-auto flex-wrap mb-10">
               <div
                 className={
                   activeTab === "tab1"
@@ -38,8 +38,13 @@ const Custommer = () => {
                 }
                 onClick={() => setActiveTab("tab1")}
               >
-                <img src={imyaccount} alt="my-account-icon" />
-                <p>My account</p>
+                <img
+                  src={imyaccount}
+                  alt="my-account-icon"
+                  className="w-8 h-8 "
+                />
+
+                <p className="hidden sm:block">My account</p>
               </div>
               <div
                 className={
@@ -50,7 +55,7 @@ const Custommer = () => {
                 onClick={() => setActiveTab("tab2")}
               >
                 <img src={imaps} alt="maps-icon" />
-                <p>Shipping address</p>
+                <p className="hidden sm:block">Shipping address</p>
               </div>
               <div
                 className={
@@ -61,17 +66,15 @@ const Custommer = () => {
                 onClick={() => setActiveTab("tab3")}
               >
                 <img src={imyorder} alt="my-order-icon" />
-                <p>My order</p>
+                <p className="hidden sm:block">My order</p>
               </div>
             </div>
           </div>
         </div>
-        <div className="col-span-3 bg-gray-200 h-screen flex items-center">
-          <div className="bg-white w-10/12 mx-auto border border-black rounded-md shadow-lg mt-20">
-            {activeTab === "tab1" && <MyAccount />}
-            {activeTab === "tab2" && <MyAddress />}
-            {activeTab === "tab3" && <MyOrder />}
-          </div>
+        <div className="col-span-3 bg-gray-200 min-h-screen flex lg:items-center overflow-auto items-start">
+          {activeTab === "tab1" && <MyAccount />}
+          {activeTab === "tab2" && <MyAddress />}
+          {activeTab === "tab3" && <MyOrder />}
         </div>
       </div>
     </>
