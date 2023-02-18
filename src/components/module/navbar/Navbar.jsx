@@ -10,6 +10,7 @@ import img from "../../../asset/img/img.jpeg";
 
 const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
+  const token = localStorage.getItem("token");
 
   const handleCariClick = () => {
     setShowSearch(!showSearch);
@@ -24,7 +25,7 @@ const Navbar = () => {
             </Link>
           )}
           <label
-            for="cek"
+            htmlFor="cek"
             className="absolute top-16 cursor-pointer shadow-md sm:hidden"
           >
             <div className="bg-slate-700 h-0.5 w-6 mt-1"></div>
@@ -59,56 +60,59 @@ const Navbar = () => {
         <input type="checkbox" id="cek" className="peer hidden" />
         <div className="flex flex-col lg:grow items-center sm:justify-around gap-5 absolute left-0 top-0 -translate-x-[33rem] peer-checked:translate-x-0 transition duration-500 h-screen bg-white shadow-2xl w-10/12 p-5 sm:translate-x-0 sm:w-auto sm:flex-row sm:static sm:h-auto sm:bg-inherit sm:shadow-none z-50">
           <label
-            for="cek"
+            htmlFor="cek"
             className="absolute top-6 cursor-pointer text-2xl right-6 sm:hidden"
           >
             X
           </label>
-          <div className="flex gap-5 flex-col sm:items-center mt-24 sm:flex-row sm:mt-0">
-            <Link to="/checkout" className="flex gap-2">
-              <div>
-                <img src={shopping} alt="shop" />
+
+          {token ? (
+            <div className="flex gap-5 flex-col sm:items-center mt-24 sm:flex-row sm:mt-0">
+              <Link to="/checkout" className="flex gap-2">
+                <div>
+                  <img src={shopping} alt="shop" />
+                </div>
+                <p className="sm:hidden">Cart</p>
+              </Link>
+              <div className="flex gap-2">
+                <div>
+                  <img src={bell} alt="bell" />
+                </div>
+                <p className="sm:hidden">Notificatin</p>
               </div>
-              <p className="sm:hidden">Cart</p>
-            </Link>
-            <div className="flex gap-2">
-              <div>
-                <img src={bell} alt="bell" />
+              <div className="flex gap-2">
+                <div>
+                  <img src={mail} alt="mail" />
+                </div>
+                <p className="sm:hidden">Chats</p>
               </div>
-              <p className="sm:hidden">Notificatin</p>
+              <Link to="/custommer" className="flex gap-2">
+                <div>
+                  <img
+                    src={img}
+                    alt="img"
+                    className="w-8 rounded-full object-cover"
+                  />
+                </div>
+                <p className="sm:hidden">Profile</p>
+              </Link>
             </div>
-            <div className="flex gap-2">
-              <div>
-                <img src={mail} alt="mail" />
-              </div>
-              <p className="sm:hidden">Chats</p>
+          ) : (
+            <div className="flex gap-5 flex-col mt-24 sm:flex-row sm:mt-0">
+              <Link
+                to="login"
+                className="bg-red-600 text-white w-24 py-1.5 text-center rounded-full hover:bg-red-500 transition-all cursor-pointer"
+              >
+                Login
+              </Link>
+              <Link
+                to="register"
+                className="w-24 py-1.5 border border-gray-300 text-center rounded-full cursor-pointer hover:bg-gray-200 transition-all"
+              >
+                Sign up
+              </Link>
             </div>
-            <Link to="/custommer" className="flex gap-2">
-              <div>
-                <img
-                  src={img}
-                  alt="img"
-                  className="w-8 rounded-full object-cover"
-                />
-              </div>
-              <p className="sm:hidden">Profile</p>
-            </Link>
-          </div>
-          {/* <div className="flex gap-5 flex-col mt-24 sm:flex-row sm:mt-0">
-            <Link
-              to="login"
-              className="bg-red-600 text-white w-24 py-1.5 text-center rounded-full hover:bg-red-500 transition-all cursor-pointer"
-            >
-              Login
-            </Link>
-            <Link
-              to="register"
-              className="w-24 py-1.5 border border-gray-300 text-center rounded-full cursor-pointer hover:bg-gray-200 transition-all"
-            >
-              Sign up
-            </Link>
-            
-          </div> */}
+          )}
         </div>
       </nav>
     </>

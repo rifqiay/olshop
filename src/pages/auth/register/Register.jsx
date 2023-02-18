@@ -3,9 +3,19 @@ import logo from "../../../asset/icon/logo.svg";
 import Button from "../../../components/base/button";
 import Custommer from "../../../components/module/custommer/Custommer";
 import Seller from "../../../components/module/seller/Seller";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
+import {
+  registerCustomer,
+  registerSeller,
+} from "../../../config/features/auth/authSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [active, setActive] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -17,8 +27,32 @@ const Register = () => {
     }
   };
 
+  const { values, handleChange, handleSubmit, handleReset } = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      phoneNumber: "",
+      storeName: "",
+      password: "",
+    },
+    onSubmit: () => {
+      const customer = {
+        name: values.name,
+        email: values.email,
+        password: values.password,
+      };
+      if (active) {
+        dispatch(registerCustomer({ customer, navigate, toast }));
+      } else {
+        dispatch(registerSeller({ values, navigate, toast }));
+      }
+      handleReset();
+    },
+  });
+
   return (
     <div className="h-screen flex justify-center items-center my-10">
+      <ToastContainer autoClose={3000} />
       <div className="w-10/12 max-w-md">
         <img src={logo} alt="logo" className="block mx-auto" />
         <p className="text-center mt-3">Please login with your account</p>
@@ -45,21 +79,26 @@ const Register = () => {
           </div>
         </div>
         <div className="mt-12">
-          <form>
+          <form onSubmit={handleSubmit}>
             {active ? (
               <Custommer
                 showPassword={showPassword}
                 handleShowPassword={handleShowPassword}
+                values={values}
+                handleChange={handleChange}
               />
             ) : (
               <Seller
                 showPassword={showPassword}
                 handleShowPassword={handleShowPassword}
+                values={values}
+                handleChange={handleChange}
               />
             )}
             <p className="mt-5 text-end">Forgot password?</p>
             <Button
               name="Register"
+              type="submit"
               className="bg-[#DB3022] p-3 w-full text-white mt-5 rounded-full hover:bg-[#f43928] transition-all"
             />
           </form>

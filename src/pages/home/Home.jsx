@@ -1,13 +1,25 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Card from "../../components/module/card/Card";
 import Carousel from "../../components/module/carousel/Carousel";
 import Category from "../../components/module/category/category";
 import Navbar from "../../components/module/navbar/Navbar";
+import {
+  getAllProduct,
+  getNewProduct,
+} from "../../config/features/product/productSlice";
 
 const Home = () => {
+  const dispatch = useDispatch();
+
+  const { items } = useSelector((state) => state.product);
+  const { all } = useSelector((state) => state.product);
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    dispatch(getNewProduct());
+    dispatch(getAllProduct());
+  }, [dispatch]);
   return (
     <>
       <Navbar />
@@ -30,12 +42,19 @@ const Home = () => {
           className="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5"
           data-aos="fade-up"
         >
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          {items.map((item, index) => {
+            const photo = item.photo0.split(",");
+            const linkPhoto = photo[photo.length - 1];
+            return (
+              <Card
+                name={item.name}
+                price={item.price}
+                store={item.storename}
+                img={linkPhoto}
+                key={index}
+              />
+            );
+          })}
         </div>
         <div className="mt-14">
           <h1 className="text-3xl font-bold ">Popular</h1>
@@ -47,12 +66,19 @@ const Home = () => {
           className="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5"
           data-aos="fade-up"
         >
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          {all.map((item, index) => {
+            const photo = item.photo0.split(",");
+            const linkPhoto = photo[photo.length - 1];
+            return (
+              <Card
+                name={item.name}
+                price={item.price}
+                store={item.storeName}
+                img={linkPhoto}
+                key={index}
+              />
+            );
+          })}
         </div>
       </div>
     </>

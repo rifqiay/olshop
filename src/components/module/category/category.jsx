@@ -1,18 +1,22 @@
-import React from "react";
-import tshirt from "../../../asset/img/t-shirt.svg";
-import short from "../../../asset/img/short.svg";
-import jacket from "../../../asset/img/jacket.svg";
-import pants from "../../../asset/img/pants.svg";
-import shoes from "../../../asset/img/shoes.svg";
+import React, { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 // import Swiper styles
 import "swiper/css";
 import "./category.css";
 
-import { Pagination } from "swiper";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { Pagination } from "swiper";
+import { getAllCategories } from "../../../config/features/categories/categoriesSlice";
 
 const Category = () => {
+  const dispatch = useDispatch();
+
+  const { items } = useSelector((state) => state.categories);
+
+  useEffect(() => {
+    dispatch(getAllCategories());
+  }, []);
   return (
     <div className="h-44 category">
       <Swiper
@@ -31,23 +35,19 @@ const Category = () => {
           },
         }}
       >
-        <SwiperSlide>
-          <Link to="category/1">
-            <img src={tshirt} alt="t-shirt" />
-          </Link>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={shoes} alt="shoes" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={pants} alt="pants" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={jacket} alt="jacket" />
-        </SwiperSlide>
-        <SwiperSlide>
-          <img src={short} alt="short" />
-        </SwiperSlide>
+        {items.map((item, index) => (
+          <SwiperSlide key={index}>
+            <Link to={`category/${item.id}`}>
+              <div className="bg-gray-100 h-36 w-40 rounded-lg shadow-lg">
+                <img
+                  src={item.photo}
+                  alt="t-shirt"
+                  className="border w-full h-full rounded-lg object-cover"
+                />
+              </div>
+            </Link>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );
