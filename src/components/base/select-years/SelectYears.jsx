@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 
-const SelectYears = () => {
+const SelectYears = ({ handleBirth, birt }) => {
   const [years, setYears] = useState([]);
 
   useEffect(() => {
@@ -13,11 +13,12 @@ const SelectYears = () => {
   return (
     <>
       <select
-        name="day"
+        name="year"
         id="day"
         className="py-1 px-2 bg-white border-2 rounded-md border-gray-400 focus:outline-none"
+        onChange={handleBirth}
       >
-        <option>1999</option>
+        <option>{birt.year}</option>
         {years.map((item, index) => (
           <Fragment key={index}>
             <option value={item}>{item}</option>

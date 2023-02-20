@@ -1,5 +1,6 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import cartorder from "../../asset/icon/cart-order.png";
+import Button from "../../components/base/button";
 import product from "../../asset/icon/product.png";
 import store from "../../asset/icon/store.png";
 import img from "../../asset/img/img.jpeg";
@@ -11,29 +12,79 @@ import MyProduct from "../../components/module/my-product/MyProduct";
 import MyStore from "../../components/module/my-store/MyStore";
 import Navbar from "../../components/module/navbar/Navbar";
 import SellingProduct from "../../components/module/selling-product/SellingProduct";
+import { useSelector, useDispatch } from "react-redux";
+import { editSeller, getSeller } from "../../config/features/auth/authSlice";
+import jwt_decode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import { ToastContainer, toast } from "react-toastify";
 
 const Seller = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+  const { id } = jwt_decode(token);
+  const { seller } = useSelector((state) => state.auth);
   const [activeTab, setActiveTab] = useState("tab1");
+  const [photo, setPhoto] = useState(null);
+  const [loading, setLoading] = useState(false);
 
+  // console.log(seller[0].photo.split(","));
+  let imgProfile;
+  if (seller.length !== 0) {
+    const imgLink = seller[0]?.photo.split(",");
+    imgProfile = imgLink[imgLink?.length - 1];
+  }
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  useEffect(() => {
+    dispatch(getSeller(id));
+  }, [dispatch, id, loading]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    navigate("/login");
+  };
+
+  const formData = new FormData();
+  const { values, handleChange, handleSubmit } = useFormik({
+    initialValues: {
+      storeName: seller[0].storename,
+      email: seller[0].email,
+      phoneNumber: seller[0].phonenumber,
+      storeDescription: seller[0].storedescription,
+    },
+    onSubmit: () => {
+      formData.append("storeName", values.storeName);
+      formData.append("email", values.email);
+      formData.append("phoneNumber", values.phoneNumber);
+      formData.append("storeDescription", values.storeDescription);
+      formData.append("photo", photo);
+      setLoading(true);
+      dispatch(editSeller({ id, formData, setLoading, toast }));
+    },
+  });
+
+  // console.log("seller ", values.storeDescription);
   return (
     <>
       <Navbar />
-      <div className="grid grid-cols-4">
+      <ToastContainer autoClose={3000} />
+      <div className="lg:grid grid-cols-4">
         <div className="mt-28">
-          <div className="w-9/12 ml-auto">
+          <div className="w-9/12 ml-5 lg:ml-auto">
             <div className="flex gap-3 items-center">
               <img
-                src={img}
+                src={imgProfile ? imgProfile : img}
                 alt="profile-icon"
-                className="w-16 h-16 rounded-full"
+                className="w-16 h-16 rounded-full object-cover"
               />
-              <p className="text-lg font-medium">Jhohanes Mikael</p>
+              <p className="text-lg font-medium">{seller[0]?.name}</p>
             </div>
 
-            <div className="mt-12 flex flex-col gap-5 text-xl text-slate-500">
+            <div className="mt-12 flex lg:flex-col gap-5 text-xl mb-10 text-slate-500">
               <div className="flex gap-3 cursor-pointer">
                 <AccordionStore
                   icon={store}
@@ -63,12 +114,26 @@ const Seller = () => {
                 />
               </div>
             </div>
+            <Button
+              name="log out"
+              className="bg-red-600 text-white mb-5 block px-4 py-2 rounded-md hover:bg-red-500 transition-all"
+              onClick={handleLogout}
+            />
           </div>
         </div>
         <div className="col-span-3 bg-gray-200 min-h-screen overflow-auto flex py-20 mt-16">
-          {activeTab === "tab1" && <MyStore />}
+          {activeTab === "tab1" && (
+            <MyStore
+              values={values}
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+              setPhoto={setPhoto}
+              imgProfile={imgProfile}
+              seller={seller[0]}
+            />
+          )}
           {activeTab === "tab2" && <MyProduct />}
-          {activeTab === "tab3" && <SellingProduct />}
+          {activeTab === "tab3" && <SellingProduct id={id} />}
           {activeTab === "tab4" && <MyOrderSeller />}
         </div>
       </div>

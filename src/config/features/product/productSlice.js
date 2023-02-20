@@ -17,12 +17,30 @@ export const getAllProduct = createAsyncThunk("product/getAll", async () => {
     console.log(error);
   }
 });
+// add product
+export const addProduct = createAsyncThunk(
+  "product/add",
+  async ({ formData, setLoading, toast }) => {
+    try {
+      const result = await api.post("/product", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(result);
+      return result.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 
 const productSlice = createSlice({
   name: "product",
   initialState: {
     items: [],
     all: [],
+    addProduct: "",
   },
   extraReducers: (builder) => {
     builder.addCase(getNewProduct.fulfilled, (state, action) => {
@@ -30,6 +48,9 @@ const productSlice = createSlice({
     });
     builder.addCase(getAllProduct.fulfilled, (state, action) => {
       state.all = action.payload;
+    });
+    builder.addCase(addProduct.fulfilled, (state, action) => {
+      state.add = action.payload;
     });
   },
 });

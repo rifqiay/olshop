@@ -19,7 +19,7 @@ function App() {
         <Route path="detail/:id" element={<Detail />} />
         <Route path="category/:id" element={<Category />} />
         <Route path="checkout" element={<Checkout />} />
-        <Route path="custommer" element={<Custommer />} />
+        <Route path="customer" element={<Custommer />} />
         <Route path="seller" element={<Seller />} />
       </Routes>
     </BrowserRouter>

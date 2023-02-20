@@ -14,14 +14,14 @@ const AccordionProduct = ({
         <img src={icon} alt="my-store-icon" />
       </div>
       <div>
-        <input type="checkbox" id="item2" class="peer hidden" />
+        <input type="checkbox" id="item2" className="peer hidden" />
         <label
           htmlFor="item2"
           className="flex justify-between hover:cursor-pointer peer-checked:text-black"
         >
           {title}
         </label>
-        <div class="border-t mt-3 hidden peer-checked:block transition-all">
+        <div className="border-t mt-3 hidden peer-checked:block transition-all">
           <p
             onClick={() => setActiveTab("tab2")}
             className={

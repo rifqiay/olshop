@@ -38,7 +38,7 @@ const Category = () => {
         {items.map((item, index) => (
           <SwiperSlide key={index}>
             <Link to={`category/${item.id}`}>
-              <div className="bg-gray-100 h-36 w-40 rounded-lg shadow-lg">
+              <div className="bg-gray-100 h-36 w-40 mx-5 rounded-lg shadow-lg">
                 <img
                   src={item.photo}
                   alt="t-shirt"

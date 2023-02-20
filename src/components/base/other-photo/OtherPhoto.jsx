@@ -1,21 +1,27 @@
 import React from "react";
 
-const OtherPhoto = ({ handlePhoto, item, handleRemove, index }) => {
+const OtherPhoto = ({ item, handleRemove, index, onClick }) => {
   return (
-    <div className="relative">
-      <input
-        type="file"
-        name="photos1"
-        id="photos1"
-        className="hidden"
-        onChange={handlePhoto}
-      />
-      <label
-        htmlFor="photos1"
-        className="rounded-lg bg-gray-100 w-20 h-20 flex justify-center items-center cursor-pointer"
+    <div className="relative  mx-2">
+      <div
+        className={
+          index === 0
+            ? "rounded-lg bg-gray-100 w-32 h-32 flex justify-center items-center cursor-pointer"
+            : "rounded-lg bg-gray-100 w-20 h-20 flex justify-center items-center cursor-pointer"
+        }
+        onClick={onClick}
       >
-        {item ? <img src={item} alt="img" /> : <p>add</p>}
-      </label>
+        {item ? (
+          <img src={item} alt="img" className="border-2 shadow-lg" />
+        ) : (
+          <p>add</p>
+        )}
+      </div>
+      {index === 0 && (
+        <>
+          <p className="text-center mt-2">Cover</p>
+        </>
+      )}
       <div
         className="bg-red-600 text-white absolute -right-[2px] -top-[13px] h-[17px] w-[15px] rounded-full cursor-pointer"
         onClick={() => handleRemove(index)}

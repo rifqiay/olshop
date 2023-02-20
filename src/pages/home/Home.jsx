@@ -73,7 +73,7 @@ const Home = () => {
               <Card
                 name={item.name}
                 price={item.price}
-                store={item.storeName}
+                store={item.storename}
                 img={linkPhoto}
                 key={index}
               />

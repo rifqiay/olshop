@@ -1,19 +1,67 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import search from "../../../asset/icon/search.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../asset/icon/logo.svg";
 import bell from "../../../asset/icon/bell.svg";
-import filter from "../../../asset/icon/filter.svg";
+// import filter from "../../../asset/icon/filter.svg";
 import mail from "../../../asset/icon/mail.svg";
 import shopping from "../../../asset/icon/shopping-cart .svg";
 import img from "../../../asset/img/img.jpeg";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCustomer,
+  getSeller,
+} from "../../../config/features/auth/authSlice";
+import jwt_decode from "jwt-decode";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showSearch, setShowSearch] = useState(false);
   const token = localStorage.getItem("token");
+  const chooseRole = localStorage.getItem("role");
+  let id;
+  if (token) {
+    const getId = jwt_decode(token);
+    id = getId.id;
+  }
 
   const handleCariClick = () => {
     setShowSearch(!showSearch);
+  };
+
+  let imgProfile;
+
+  const { seller } = useSelector((state) => state.auth);
+  const { customer } = useSelector((state) => state.auth);
+
+  if (customer) {
+    if (customer[0]?.photo) {
+      const photo = customer[0].photo.split(",");
+      imgProfile = photo[photo.length - 1];
+    }
+  }
+  if (seller) {
+    if (seller[0]?.photo) {
+      const photo = seller[0].photo.split(",");
+      imgProfile = photo[photo.length - 1];
+    }
+  }
+
+  useEffect(() => {
+    if (token && chooseRole === "seller") {
+      dispatch(getSeller(id));
+    } else if (token) {
+      dispatch(getCustomer(id));
+    }
+  }, [chooseRole, dispatch, id, token]);
+
+  const navigateProfile = () => {
+    if (chooseRole === "seller") {
+      navigate("/seller");
+    } else {
+      navigate("/customer");
+    }
   };
   return (
     <>
@@ -86,16 +134,19 @@ const Navbar = () => {
                 </div>
                 <p className="sm:hidden">Chats</p>
               </div>
-              <Link to="/custommer" className="flex gap-2">
+              <div
+                className="flex gap-2 cursor-pointer "
+                onClick={navigateProfile}
+              >
                 <div>
                   <img
-                    src={img}
+                    src={imgProfile ? imgProfile : img}
                     alt="img"
-                    className="w-8 rounded-full object-cover"
+                    className="w-8 h-8 rounded-full object-cover"
                   />
                 </div>
                 <p className="sm:hidden">Profile</p>
-              </Link>
+              </div>
             </div>
           ) : (
             <div className="flex gap-5 flex-col mt-24 sm:flex-row sm:mt-0">

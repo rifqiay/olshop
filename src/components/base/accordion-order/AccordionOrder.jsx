@@ -7,14 +7,14 @@ const AccordionOrder = ({ icon, title, subtitle, setActiveTab, activeTab }) => {
         <img src={icon} alt={icon} />
       </div>
       <div>
-        <input type="checkbox" id="item3" class="peer hidden" />
+        <input type="checkbox" id="item3" className="peer hidden" />
         <label
           htmlFor="item3"
           className="flex justify-between hover:cursor-pointer peer-checked:text-black"
         >
           {title}
         </label>
-        <div class="border-t mt-3 hidden peer-checked:block transition-all">
+        <div className="border-t mt-3 hidden peer-checked:block transition-all">
           <p
             onClick={() => setActiveTab("tab4")}
             className={

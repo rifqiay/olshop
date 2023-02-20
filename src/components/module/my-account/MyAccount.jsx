@@ -6,11 +6,20 @@ import SelectDay from "../../base/select-day/SelectDay";
 import SelectMonth from "../../base/select-mont/SelectMonth";
 import SelectYears from "../../base/select-years/SelectYears";
 
-const MyAccount = () => {
+const MyAccount = ({
+  values,
+  handleChange,
+  handleSubmit,
+  handleBirth,
+  setPhoto,
+  birt,
+  imgProfile,
+}) => {
   const [prevImg, setPrevImg] = useState(null);
 
-  const handleChange = (e) => {
+  const handlePhoto = (e) => {
     const file = e.target.files[0];
+    setPhoto(file);
     const reader = new FileReader();
 
     reader.onloadend = () => {
@@ -33,7 +42,7 @@ const MyAccount = () => {
         <div className="order-2">
           <div className="border-l-2">
             <img
-              src={prevImg ? prevImg : img}
+              src={prevImg ? prevImg : imgProfile || img}
               alt="profil"
               className="w-24 h-24 rounded-full mx-auto mt-7 object-cover"
             />
@@ -41,7 +50,7 @@ const MyAccount = () => {
               type="file"
               className="hidden"
               id="photos"
-              onChange={handleChange}
+              onChange={handlePhoto}
             />
             <label
               htmlFor="photos"
@@ -53,7 +62,7 @@ const MyAccount = () => {
         </div>
 
         <div className="col-span-2 p-5 order-1">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="lg:flex gap-10 items-center">
               <label htmlFor="nama" className="text-slate-500 ml-auto">
                 Name
@@ -63,6 +72,9 @@ const MyAccount = () => {
                 id="nama"
                 className="border p-3 rounded-md focus:outline-none lg:w-8/12 ml-auto w-full"
                 placeholder="Name"
+                name="name"
+                values={values.name}
+                onChange={handleChange}
               />
             </div>
             <div className="lg:flex gap-10 items-center mt-5">
@@ -74,6 +86,9 @@ const MyAccount = () => {
                 id="email"
                 className="border p-3 rounded-md focus:outline-none lg:w-8/12 ml-auto w-full"
                 placeholder="Email"
+                name="email"
+                values={values.email}
+                onChange={handleChange}
               />
             </div>
             <div className="lg:flex gap-10 items-center mt-5">
@@ -85,6 +100,9 @@ const MyAccount = () => {
                 id="phone"
                 className="border p-3 rounded-md focus:outline-none lg:w-8/12 ml-auto w-full"
                 placeholder="Phone Number"
+                name="phoneNumber"
+                values={values.phoneNumber}
+                onChange={handleChange}
               />
             </div>
             <div className="lg:flex gap-20 mt-5 text-slate-500">
@@ -96,6 +114,8 @@ const MyAccount = () => {
                     name="gender"
                     id="male"
                     value="laki-laki"
+                    checked={values.gender === "laki-laki"}
+                    onChange={handleChange}
                   />
                   <label htmlFor="male">Laki-laki</label>
                 </div>
@@ -105,6 +125,8 @@ const MyAccount = () => {
                     name="gender"
                     id="female"
                     value="perempuan"
+                    checked={values.gender === "perempuan"}
+                    onChange={handleChange}
                   />
                   <label htmlFor="female">Perempuan</label>
                 </div>
@@ -113,13 +135,14 @@ const MyAccount = () => {
             <div className="lg:flex mt-5 gap-[4.5rem]">
               <p className="text-slate-500">Date of birt</p>
               <div className="flex gap-5">
-                <SelectDay />
-                <SelectMonth />
-                <SelectYears />
+                <SelectDay handleBirth={handleBirth} birt={birt} />
+                <SelectMonth handleBirth={handleBirth} birt={birt} />
+                <SelectYears handleBirth={handleBirth} birt={birt} />
               </div>
             </div>
             <Button
               name="Save"
+              type="submit"
               className="bg-red-500 text-white px-8 py-2  mt-10 lg:ml-0 mb-5 rounded-full hover:bg-red-600 transition-all block ml-auto"
             />
           </form>

@@ -1,14 +1,15 @@
 import React from "react";
 
-const SelectMonth = () => {
+const SelectMonth = ({ handleBirth, birt }) => {
   return (
     <>
       <select
-        name="day"
+        name="month"
         id="day"
         className="py-1 px-2 bg-white border-2 rounded-md border-gray-400 focus:outline-none"
+        onChange={handleBirth}
       >
-        <option>April</option>
+        <option>{birt.month}</option>
         <option value="January">January</option>
         <option value="February">February</option>
         <option value="March">March</option>

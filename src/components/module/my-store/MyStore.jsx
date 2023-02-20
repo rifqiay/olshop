@@ -3,11 +3,18 @@ import img from "../../../asset/img/img.jpeg";
 import Button from "../../base/button";
 import Input from "../../base/input/Input";
 
-const MyStore = () => {
+const MyStore = ({
+  values,
+  handleChange,
+  handleSubmit,
+  setPhoto,
+  imgProfile,
+}) => {
   const [prevImg, setPrevImg] = useState(null);
 
-  const handleChange = (e) => {
+  const handlePhoto = (e) => {
     const file = e.target.files[0];
+    setPhoto(file);
     const reader = new FileReader();
 
     reader.onloadend = () => {
@@ -31,7 +38,7 @@ const MyStore = () => {
 
       <div className="grid grid-cols-3 gap-5">
         <div className="col-span-2 p-5">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="flex gap-10 items-center">
               <label htmlFor="nama" className="text-slate-500 ml-auto">
                 Store name
@@ -41,6 +48,9 @@ const MyStore = () => {
                 id="nama"
                 className="border p-3 rounded-md focus:outline-none w-8/12 ml-auto shadow-md"
                 placeholder="Name"
+                name="storeName"
+                values={values.storeName}
+                onChange={handleChange}
               />
             </div>
             <div className="flex gap-10 items-center mt-5">
@@ -52,6 +62,9 @@ const MyStore = () => {
                 id="email"
                 className="border p-3 rounded-md focus:outline-none w-8/12 ml-auto shadow-md"
                 placeholder="Email"
+                name="email"
+                values={values.email}
+                onChange={handleChange}
               />
             </div>
             <div className="flex gap-10 items-center mt-5 ">
@@ -63,6 +76,9 @@ const MyStore = () => {
                 id="phone"
                 className="border p-3 rounded-md focus:outline-none w-8/12 ml-auto shadow-md"
                 placeholder="Phone Number"
+                name="phoneNumber"
+                values={values.phoneNumber}
+                onChange={handleChange}
               />
             </div>
             <div className="flex gap-10 mt-5">
@@ -70,15 +86,18 @@ const MyStore = () => {
                 Store description
               </label>
               <textarea
-                name="description"
                 cols="27"
                 rows="4"
                 className="border focus:outline-none shadow-md p-3"
+                name="storeDescription"
+                value={values.storeDescription}
+                onChange={handleChange}
               ></textarea>
             </div>
 
             <Button
               name="Save"
+              type="submit"
               className="bg-red-500 text-white px-8 py-2 ml-40 mt-10 rounded-full hover:bg-red-600 transition-all"
             />
           </form>
@@ -86,7 +105,7 @@ const MyStore = () => {
         <div>
           <div className="border-l-2">
             <img
-              src={prevImg ? prevImg : img}
+              src={prevImg ? prevImg : imgProfile || img}
               alt="profil"
               className="w-24 h-24 rounded-full mx-auto mt-7 object-cover"
             />
@@ -94,7 +113,7 @@ const MyStore = () => {
               type="file"
               className="hidden"
               id="photos"
-              onChange={handleChange}
+              onChange={handlePhoto}
             />
             <label
               htmlFor="photos"

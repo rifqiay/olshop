@@ -6,7 +6,7 @@ import noProductIcon from "../../../asset/img/no-product.png";
 const MyProduct = () => {
   return (
     <div
-      className="bg-white w-10/12 mx-auto border border-black rounded-md shadow-lg"
+      className="bg-white lg:w-10/12 mx-auto border border-black rounded-md shadow-lg my-20 w-11/12"
       data-aos="fade-left"
     >
       <div className="p-5">
