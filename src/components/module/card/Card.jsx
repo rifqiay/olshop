@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import img from "../../../asset/img/img.jpeg";
 import Rating from "../../../asset/img/Rating.svg";
 
-const Card = ({ img, name, store, price }) => {
+const Card = ({ img, name, store, price, id }) => {
   const navigate = useNavigate();
   return (
     <div
       className="border w-full rounded-lg cursor-pointer shadow-md hover:shadow-2xl hover:relative transform hover:-translate-y-5 hover:scale-110 transition duration-300"
-      onClick={() => navigate("/detail/1")}
+      onClick={() => navigate(`/detail/${id}`)}
     >
       <img
         src={img}

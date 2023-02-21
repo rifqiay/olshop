@@ -1,9 +1,23 @@
-import React from "react";
-import Input from "../../base/input/Input";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import search from "../../../asset/icon/search.svg";
 import noProductIcon from "../../../asset/img/no-product.png";
+import Button from "../../base/button";
+import Input from "../../base/input/Input";
+import trash from "../../../asset/icon/trash.svg";
+import edit from "../../../asset/icon/edit.svg";
+import { getMyProduct } from "../../../config/features/product/productSlice";
+import { useNavigate } from "react-router-dom";
 
-const MyProduct = () => {
+const MyProduct = ({ id }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { myProducts } = useSelector((state) => state.product);
+
+  useEffect(() => {
+    dispatch(getMyProduct(id));
+  }, []);
+
   return (
     <div
       className="bg-white lg:w-10/12 mx-auto border border-black rounded-md shadow-lg my-20 w-11/12"
@@ -32,16 +46,45 @@ const MyProduct = () => {
         </div>
 
         <div>
-          <div className="flex bg-gray-200 py-3 px-10 justify-between rounded-t-md mt-5 ">
-            <h5>Product name</h5>
-            <div className="flex gap-32 ">
-              <h5>Price</h5>
-              <h5>Stock</h5>
+          <table className="mt-10 w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th className="px-6 py-3">No</th>
+                <th className="px-6 py-3">Name</th>
+                <th className="px-6 py-3">Price</th>
+                <th className="px-6 py-3">Stock</th>
+                <th className="px-6 py-3">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {myProducts.map((item, index) => (
+                <tr
+                  key={index}
+                  className={index % 2 === 1 ? "bg-gray-100" : "bg-gray-200"}
+                >
+                  <td className="px-6 py-4 text-gray-900">{index + 1}</td>
+                  <td
+                    className="px-6 py-4 text-blue-600 cursor-pointer"
+                    onClick={() => navigate(`/detail/${item.id}`)}
+                  >
+                    {item.name}
+                  </td>
+                  <td className="px-6 py-4 text-gray-900">{item.price}</td>
+                  <td className="px-6 py-4 text-gray-900">{item.stock}</td>
+                  <td className="flex gap-3 px-6 py-4">
+                    <img src={trash} alt="trash" className="w-5" />
+                    <img src={edit} alt="edit" className="w-5" />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {!myProducts && (
+            <div className="border border-gray-300 rounded-b-md flex justify-center items-center h-80">
+              <img src={noProductIcon} alt="no-product-icon" />
             </div>
-          </div>
-          <div className="border border-gray-300 rounded-b-md flex justify-center items-center h-80">
-            <img src={noProductIcon} alt="no-product-icon" />
-          </div>
+          )}
         </div>
       </div>
     </div>

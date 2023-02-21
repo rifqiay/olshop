@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import Input from "../../base/input/Input";
 import Button from "../../base/button";
 import OtherPhoto from "../../base/other-photo/OtherPhoto";
@@ -97,13 +97,28 @@ const SellingProduct = ({ id }) => {
     formData.append("description", clean);
     formData.append("sellerId", id);
     formData.append("categoryId", data.categoryId);
-    formData.append("photo", photo);
+    photo.map((item) => {
+      formData.append("photo", item);
+    });
+    setLoading(true);
     dispatch(addProduct({ formData, setLoading, toast }));
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
+    setData({
+      name: "",
+      price: "",
+      stock: "",
+      color: "",
+      size: "",
+      condition: "",
+      description: "",
+      categoryId: "",
+    });
+    setDescription("");
+    setPhoto(null);
+
+    // for (const [key, value] of formData.entries()) {
+    //   console.log(`${key}: ${value}`);
+    // }
   };
-  console.log(photo);
 
   return (
     <div className="w-full flex flex-col gap-5" data-aos="fade-left">
@@ -257,11 +272,23 @@ const SellingProduct = ({ id }) => {
           />
         </div>
       </div>
-      <Button
-        name="Save"
-        className="bg-red-500 w-40 rounded-full py-2 text-white font-medium relative -right-[42rem] top-12 hover:bg-red-600 transition-all"
-        onClick={handleSubmit}
-      />
+      {loading ? (
+        <>
+          <button
+            className="bg-red-400 w-40 rounded-full py-2 text-white font-medium relative -right-[42rem] top-12 flex gap-3 justify-center items-center"
+            disabled
+          >
+            Save{" "}
+            <div class="h-5 w-5 border-2 rounded-full border-l-0 border-b-0 animate-spin"></div>
+          </button>
+        </>
+      ) : (
+        <Button
+          name="Save"
+          className="bg-red-500 w-40 rounded-full py-2 text-white font-medium relative -right-[42rem] top-12 hover:bg-red-600 transition-all"
+          onClick={handleSubmit}
+        />
+      )}
     </div>
   );
 };

@@ -18,6 +18,7 @@ import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { ToastContainer, toast } from "react-toastify";
+import { getMyProduct } from "../../config/features/product/productSlice";
 
 const Seller = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ const Seller = () => {
   }, []);
   useEffect(() => {
     dispatch(getSeller(id));
+    dispatch(getMyProduct(id));
   }, [dispatch, id, loading]);
 
   const handleLogout = () => {
@@ -132,7 +134,7 @@ const Seller = () => {
               seller={seller[0]}
             />
           )}
-          {activeTab === "tab2" && <MyProduct />}
+          {activeTab === "tab2" && <MyProduct id={id} />}
           {activeTab === "tab3" && <SellingProduct id={id} />}
           {activeTab === "tab4" && <MyOrderSeller />}
         </div>

@@ -17,6 +17,19 @@ export const getAllProduct = createAsyncThunk("product/getAll", async () => {
     console.log(error);
   }
 });
+
+export const getMyProduct = createAsyncThunk(
+  "product/getMyProduct",
+  async (sellerId) => {
+    try {
+      const result = await api.get(`/product/seller/${sellerId}`);
+      return result.data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
 // add product
 export const addProduct = createAsyncThunk(
   "product/add",
@@ -27,7 +40,22 @@ export const addProduct = createAsyncThunk(
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(result);
+      setLoading(false);
+      toast.success(result.data.message);
+      return result.data.data;
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  }
+);
+
+export const getProductById = createAsyncThunk(
+  "product/getProductById",
+  async ({ id, setLoading }) => {
+    try {
+      const result = await api.get(`/product/${id}`);
+      setLoading(false);
       return result.data.data;
     } catch (error) {
       console.log(error);
@@ -41,6 +69,8 @@ const productSlice = createSlice({
     items: [],
     all: [],
     addProduct: "",
+    myProducts: [],
+    item: [],
   },
   extraReducers: (builder) => {
     builder.addCase(getNewProduct.fulfilled, (state, action) => {
@@ -51,6 +81,12 @@ const productSlice = createSlice({
     });
     builder.addCase(addProduct.fulfilled, (state, action) => {
       state.add = action.payload;
+    });
+    builder.addCase(getMyProduct.fulfilled, (state, action) => {
+      state.myProducts = action.payload;
+    });
+    builder.addCase(getProductById.fulfilled, (state, action) => {
+      state.item = action.payload;
     });
   },
 });
