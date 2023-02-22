@@ -20,7 +20,7 @@ const Category = () => {
       <div className="w-11/12 mx-auto my-32">
         <h1 className="text-3xl font-bold mb-5">{byId[0]?.category}</h1>
         <div className="grid gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-          {byId.length == 0 ? (
+          {byId.length === 0 ? (
             <>
               <h1>Data tidak tersedia</h1>
             </>

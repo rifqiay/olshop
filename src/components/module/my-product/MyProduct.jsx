@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import search from "../../../asset/icon/search.svg";
 import noProductIcon from "../../../asset/img/no-product.png";
-import Button from "../../base/button";
 import Input from "../../base/input/Input";
 import trash from "../../../asset/icon/trash.svg";
 import edit from "../../../asset/icon/edit.svg";
@@ -16,7 +15,7 @@ const MyProduct = ({ id }) => {
 
   useEffect(() => {
     dispatch(getMyProduct(id));
-  }, []);
+  }, [id, dispatch]);
 
   return (
     <div

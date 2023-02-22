@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import img from "../../../asset/img/img.jpeg";
 import Rating from "../../../asset/img/Rating.svg";
 
 const Card = ({ img, name, store, price, id }) => {

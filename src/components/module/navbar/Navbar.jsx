@@ -34,6 +34,7 @@ const Navbar = () => {
 
   const { seller } = useSelector((state) => state.auth);
   const { customer } = useSelector((state) => state.auth);
+  const { items } = useSelector((state) => state.cart);
 
   if (customer) {
     if (customer[0]?.photo) {
@@ -117,8 +118,11 @@ const Navbar = () => {
           {token ? (
             <div className="flex gap-5 flex-col sm:items-center mt-24 sm:flex-row sm:mt-0">
               <Link to="/checkout" className="flex gap-2">
-                <div>
+                <div className="relative">
                   <img src={shopping} alt="shop" />
+                  <div className="absolute bg-red-600 text-white px-1.5 rounded-full text-sm -top-2 -right-4">
+                    <p>{items.length}</p>
+                  </div>
                 </div>
                 <p className="sm:hidden">Cart</p>
               </Link>

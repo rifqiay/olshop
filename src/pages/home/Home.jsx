@@ -8,9 +8,13 @@ import {
   getAllProduct,
   getNewProduct,
 } from "../../config/features/product/productSlice";
+import jwt_decode from "jwt-decode";
+import { getCart } from "../../config/features/cart/CartSlice";
 
 const Home = () => {
   const dispatch = useDispatch();
+  const token = localStorage.getItem("token");
+  const { id } = jwt_decode(token);
 
   const { items } = useSelector((state) => state.product);
   const { all } = useSelector((state) => state.product);
@@ -19,7 +23,8 @@ const Home = () => {
     window.scrollTo(0, 0);
     dispatch(getNewProduct());
     dispatch(getAllProduct());
-  }, [dispatch]);
+    dispatch(getCart(id));
+  }, [dispatch, id]);
   return (
     <>
       <Navbar />

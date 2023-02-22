@@ -16,7 +16,7 @@ const Category = () => {
 
   useEffect(() => {
     dispatch(getAllCategories());
-  }, []);
+  }, [dispatch]);
   return (
     <div className="h-44 category">
       <Swiper

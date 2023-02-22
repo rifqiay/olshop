@@ -1,12 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import Button from "../../components/base/button";
 import Address from "../../components/module/address/Address";
 import CardShipping from "../../components/module/card-shipping/CardShipping";
 import ModalPayment from "../../components/module/modal-payment/ModalPayment";
 import Navbar from "../../components/module/navbar/Navbar";
+import { useDispatch, useSelector } from "react-redux";
+import { getCart } from "../../config/features/cart/CartSlice";
+import jwt_decode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
+import { getAddressPrimary } from "../../config/features/customer/customerSlice";
 
 const Checkout = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+
+  const token = localStorage.getItem("token");
+  const { id } = jwt_decode(token);
+
+  const { items } = useSelector((state) => state.cart);
+  const { primary } = useSelector((state) => state.customer);
+  console.log(primary);
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -14,7 +28,9 @@ const Checkout = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    dispatch(getCart(id));
+    dispatch(getAddressPrimary(id));
+  }, [dispatch, id]);
 
   return (
     <>
@@ -25,13 +41,34 @@ const Checkout = () => {
           <h1 className="text-3xl font-bold">Checkout</h1>
           <div>
             <h5 className="text-xl mb-2 mt-5">Shipping Address</h5>
-            <Address />
+            <Address
+              primaryaddress={primary.primaryaddress}
+              recipientname={primary.recipientname}
+              recipientphonenumber={primary.recipientphonenumber}
+              fulladdress={primary.fulladdress}
+              city={primary.city}
+              poscode={primary.poscode}
+              onClick={() => navigate("/customer")}
+              name="Choose another address"
+              className="border-2 py-2 px-6 rounded-full text-gray-500 hover:bg-slate-200 transition-all mt-10"
+            />
           </div>
           <div className="mt-10 flex flex-col gap-5">
-            <CardShipping />
-            <CardShipping />
-            <CardShipping />
-            <CardShipping />
+            {items.map((item, index) => {
+              const photo = item.photo.split(",");
+              const linkPhoto = photo[photo.length - 1];
+              return (
+                <Fragment key={index}>
+                  <CardShipping
+                    photo={linkPhoto}
+                    name={item.product_name}
+                    price={item.total_price}
+                    storename={item.storename}
+                    total={item.total_quantity}
+                  />
+                </Fragment>
+              );
+            })}
           </div>
         </div>
         <div data-aos="fade-left">

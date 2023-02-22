@@ -8,6 +8,7 @@ const Input = ({
   onChange,
   name,
   values,
+  checked,
 }) => {
   return (
     <>
@@ -19,6 +20,7 @@ const Input = ({
         onChange={onChange}
         name={name}
         value={values}
+        checked={checked}
       />
     </>
   );
