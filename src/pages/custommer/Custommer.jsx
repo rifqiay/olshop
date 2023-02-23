@@ -17,6 +17,7 @@ import {
   getCustomer,
 } from "../../config/features/auth/authSlice";
 import { ToastContainer, toast } from "react-toastify";
+import { getOrder } from "../../config/features/order/orderSlice";
 
 const Custommer = () => {
   const token = localStorage.getItem("token");
@@ -52,6 +53,7 @@ const Custommer = () => {
 
   useEffect(() => {
     dispatch(getCustomer(id));
+    dispatch(getOrder(id));
   }, [id, loading, dispatch]);
 
   const handleLogout = () => {
@@ -163,7 +165,7 @@ const Custommer = () => {
             />
           )}
           {activeTab === "tab2" && <MyAddress />}
-          {activeTab === "tab3" && <MyOrder />}
+          {activeTab === "tab3" && <MyOrder id={id} />}
         </div>
       </div>
     </>

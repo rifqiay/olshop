@@ -132,25 +132,25 @@ const SellingProduct = ({ id }) => {
 
             <Input
               type="text"
-              className="border p-2 rounded-md focus:outline-none w-full"
+              className="border p-2 rounded-md focus:outline-none w-full lg:w-1/2"
               name="name"
               values={data.name}
               onChange={handleChange}
             />
-          </div>
-          <div>
-            <select
-              name="categoryId"
-              values={data.categoryId}
-              onChange={handleChange}
-            >
-              <option>Category</option>
-              {items.map((item, index) => (
-                <Fragment key={index}>
-                  <option value={item.id}>{item.name}</option>
-                </Fragment>
-              ))}
-            </select>
+            <div>
+              <select
+                name="categoryId"
+                values={data.categoryId}
+                onChange={handleChange}
+              >
+                <option>Category</option>
+                {items.map((item, index) => (
+                  <Fragment key={index}>
+                    <option value={item.id}>{item.name}</option>
+                  </Fragment>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -162,7 +162,7 @@ const SellingProduct = ({ id }) => {
           <label>Unit price</label>
           <Input
             type="number"
-            className="border p-2 rounded-md focus:outline-none w-full"
+            className="border p-2 rounded-md focus:outline-none w-full lg:w-1/2"
             name="price"
             values={data.price}
             onChange={handleChange}

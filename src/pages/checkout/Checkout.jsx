@@ -9,6 +9,7 @@ import { getCart } from "../../config/features/cart/CartSlice";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { getAddressPrimary } from "../../config/features/customer/customerSlice";
+import { ToastContainer, toast } from "react-toastify";
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,6 @@ const Checkout = () => {
 
   const { items } = useSelector((state) => state.cart);
   const { primary } = useSelector((state) => state.customer);
-  console.log(primary);
 
   const handleCloseModal = () => {
     setShowModal(false);
@@ -32,11 +32,29 @@ const Checkout = () => {
     dispatch(getAddressPrimary(id));
   }, [dispatch, id]);
 
+  useEffect(() => {
+    dispatch(getCart(id));
+  }, [showModal, id, dispatch]);
+
+  const delivery = 5;
+  let total = null;
+  for (let i = 0; i < items.length; i++) {
+    const productPrice = items[i].total_price * items[i].total_quantity;
+    total += productPrice;
+  }
   return (
     <>
       <Navbar />
+      <ToastContainer autoClose={3000} />
       <div className="grid lg:grid-cols-3 gap-5 w-11/12 mx-auto my-32">
-        <ModalPayment visible={showModal} onClose={handleCloseModal} />
+        <ModalPayment
+          visible={showModal}
+          onClose={handleCloseModal}
+          total={total}
+          delivery={delivery}
+          id={id}
+          toast={toast}
+        />
         <div className="lg:col-span-2" data-aos="fade-right">
           <h1 className="text-3xl font-bold">Checkout</h1>
           <div>
@@ -62,9 +80,9 @@ const Checkout = () => {
                   <CardShipping
                     photo={linkPhoto}
                     name={item.product_name}
-                    price={item.total_price}
+                    price={`$ ${item.total_price}`}
                     storename={item.storename}
-                    total={item.total_quantity}
+                    total={`${item.total_quantity}x`}
                   />
                 </Fragment>
               );
@@ -76,16 +94,16 @@ const Checkout = () => {
             <h1 className="font-medium ">Shopping summary</h1>
             <div className="flex justify-between mt-5">
               <p className="text-slate-500">Order</p>
-              <p>$40</p>
+              <p>$ {total}</p>
             </div>
             <div className="flex justify-between my-2">
               <p className="text-slate-500">Delivery</p>
-              <p>$5.0</p>
+              <p>$ {delivery}</p>
             </div>
             <hr />
             <div className="flex justify-between my-2">
               <p>Shopping summary</p>
-              <p>$45.0</p>
+              <p>$ {total + delivery}</p>
             </div>
             <Button
               name="Select payment"

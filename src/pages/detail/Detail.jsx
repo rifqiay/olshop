@@ -9,7 +9,10 @@ import Card from "../../components/module/card/Card";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../../components/module/navbar/Navbar";
 import { useSelector, useDispatch } from "react-redux";
-import { getProductById } from "../../config/features/product/productSlice";
+import {
+  getProductById,
+  getProductByIdCategory,
+} from "../../config/features/product/productSlice";
 import Description from "../../components/module/description/Description";
 import { addToCart, getCart } from "../../config/features/cart/CartSlice";
 import jwt_decode from "jwt-decode";
@@ -22,6 +25,7 @@ const Detail = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const token = localStorage.getItem("token");
+  const chooseRole = localStorage.getItem("role");
   let idCustomer;
   if (token) {
     const { id } = jwt_decode(token);
@@ -29,7 +33,7 @@ const Detail = () => {
   }
 
   const { item } = useSelector((state) => state.product);
-  const { items } = useSelector((state) => state.product);
+  const { recent } = useSelector((state) => state.product);
 
   let cover;
   if (item.length !== 0) {
@@ -56,12 +60,16 @@ const Detail = () => {
     customerId: idCustomer,
     quantity: count,
   };
-
+  const idCategory = item[0]?.categoryid;
   useEffect(() => {
     window.scrollTo(0, 0);
     setLoading(true);
     dispatch(getProductById({ id, setLoading }));
   }, [id, dispatch]);
+
+  useEffect(() => {
+    dispatch(getProductByIdCategory(idCategory));
+  }, [dispatch, idCategory]);
 
   useEffect(() => {
     dispatch(getCart(idCustomer));
@@ -134,50 +142,63 @@ const Detail = () => {
                   <p className="mt-3">XL</p>
                 </div>
               )}
-              <div className="w-32">
-                <p className="text-center">jumlah</p>
-                <div className="flex justify-between mt-3">
-                  <div className="bg-gray-300 w-8 h-8 flex justify-center items-center rounded-full cursor-pointer">
-                    <img
-                      src={minus}
-                      alt="minus"
-                      className="w-6 "
-                      onClick={handleDecrement}
-                    />
-                  </div>
-                  <p>{count}</p>
-                  <div className="bg-gray-300 w-8 h-8 flex justify-center items-center rounded-full cursor-pointer">
-                    <img
-                      src={plus}
-                      alt="plus"
-                      className="w-6 "
-                      onClick={handleIncrement}
-                    />
+              {chooseRole === "customer" && (
+                <div className="w-32">
+                  <p className="text-center">jumlah</p>
+                  <div className="flex justify-between mt-3">
+                    <div className="bg-gray-300 w-8 h-8 flex justify-center items-center rounded-full cursor-pointer">
+                      <img
+                        src={minus}
+                        alt="minus"
+                        className="w-6 "
+                        onClick={handleDecrement}
+                      />
+                    </div>
+                    <p>{count}</p>
+                    <div className="bg-gray-300 w-8 h-8 flex justify-center items-center rounded-full cursor-pointer">
+                      <img
+                        src={plus}
+                        alt="plus"
+                        className="w-6 "
+                        onClick={handleIncrement}
+                      />
+                    </div>
                   </div>
                 </div>
+              )}
+            </div>
+            {chooseRole === "customer" && (
+              <div className="mt-8 flex gap-3 flex-wrap">
+                <Button
+                  name="Chat"
+                  className="border-2 py-2 w-40 rounded-full border-black hover:bg-gray-200 transition-all"
+                />
+                <Button
+                  name="Add bag"
+                  className="border-2 py-2 w-40 rounded-full border-black hover:bg-gray-200 transition-all"
+                  onClick={handleAddBag}
+                />
+                <Button
+                  name="Buy Now"
+                  className="bg-red-600 py-2 w-full sm:w-96 rounded-full text-white hover:bg-red-700 transition-all"
+                  onClick={() => {
+                    handleAddBag();
+                    navigate("/checkout");
+                  }}
+                />
               </div>
-            </div>
-            <div className="mt-8 flex gap-3 flex-wrap">
-              <Button
-                name="Chat"
-                className="border-2 py-2 w-40 rounded-full border-black hover:bg-gray-200 transition-all"
-              />
-              <Button
-                name="Add bag"
-                className="border-2 py-2 w-40 rounded-full border-black hover:bg-gray-200 transition-all"
-                onClick={handleAddBag}
-              />
-              <Button
-                name="Buy Now"
-                className="bg-red-600 py-2 w-full sm:w-96 rounded-full text-white hover:bg-red-700 transition-all"
-                onClick={() => navigate("/checkout")}
-              />
-            </div>
+            )}
           </div>
         </div>
         {/* informasi produk */}
         <div className="mt-10 mb-7">
           <h1 className="text-3xl">Informasi Produk</h1>
+          <div className="mt-5">
+            <h5 className="text-xl">Stock</h5>
+            <p className="uppercase text-red-600">
+              {item[0]?.stock ? item[0].stock : "loading stock"}
+            </p>
+          </div>
           <div className="mt-5">
             <h5 className="text-xl">Condition</h5>
             <p className="uppercase text-red-600">
@@ -209,7 +230,7 @@ const Detail = () => {
           className="grid gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
           data-aos="fade-up"
         >
-          {items.map((item, index) => {
+          {recent?.map((item, index) => {
             const photo = item.photo0.split(",");
             const linkPhoto = photo[photo.length - 1];
             return (

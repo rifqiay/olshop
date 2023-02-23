@@ -1,21 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import search from "../../../asset/icon/search.svg";
+import searchIcon from "../../../asset/icon/search.svg";
 import noProductIcon from "../../../asset/img/no-product.png";
 import Input from "../../base/input/Input";
 import trash from "../../../asset/icon/trash.svg";
 import edit from "../../../asset/icon/edit.svg";
-import { getMyProduct } from "../../../config/features/product/productSlice";
+import {
+  getMyProduct,
+  removeProduct,
+} from "../../../config/features/product/productSlice";
 import { useNavigate } from "react-router-dom";
 
-const MyProduct = ({ id }) => {
+const MyProduct = ({ id, toast }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
   const { myProducts } = useSelector((state) => state.product);
 
   useEffect(() => {
-    dispatch(getMyProduct(id));
-  }, [id, dispatch]);
+    dispatch(getMyProduct({ id, search }));
+  }, [id, dispatch, loading, search]);
 
   return (
     <div
@@ -26,7 +31,7 @@ const MyProduct = ({ id }) => {
         <h1 className="text-2xl font-medium">My product</h1>
         <div className="flex gap-10 text-slate-500 mt-5">
           <h5 className="text-red-600 underline font-semibold cursor-pointer">
-            All items
+            All items ({myProducts.length})
           </h5>
           <h5 className="cursor-pointer">Sould out</h5>
           <h5 className="cursor-pointer">Archived</h5>
@@ -36,9 +41,10 @@ const MyProduct = ({ id }) => {
           <Input
             type="text"
             className="border p-2 rounded-full pl-12 focus:outline-none shadow-md"
+            onChange={(e) => setSearch(e.target.value)}
           />
           <img
-            src={search}
+            src={searchIcon}
             alt="search-icon"
             className="w-[28px] absolute top-2 left-3"
           />
@@ -71,8 +77,22 @@ const MyProduct = ({ id }) => {
                   <td className="px-6 py-4 text-gray-900">{item.price}</td>
                   <td className="px-6 py-4 text-gray-900">{item.stock}</td>
                   <td className="flex gap-3 px-6 py-4">
-                    <img src={trash} alt="trash" className="w-5" />
-                    <img src={edit} alt="edit" className="w-5" />
+                    <img
+                      src={trash}
+                      alt="trash"
+                      className="w-5 cursor-pointer"
+                      onClick={() => {
+                        setLoading(true);
+                        const id = item.id;
+                        dispatch(removeProduct({ id, setLoading, toast }));
+                      }}
+                    />
+                    <img
+                      src={edit}
+                      alt="edit"
+                      className="w-5 cursor-pointer"
+                      onClick={() => navigate(`/edit/${item.id}`)}
+                    />
                   </td>
                 </tr>
               ))}

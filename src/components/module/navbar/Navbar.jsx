@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import search from "../../../asset/icon/search.svg";
+import searchIcon from "../../../asset/icon/search.svg";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../asset/icon/logo.svg";
 import bell from "../../../asset/icon/bell.svg";
@@ -18,6 +18,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showSearch, setShowSearch] = useState(false);
+  const [search, setSearch] = useState("");
   const token = localStorage.getItem("token");
   const chooseRole = localStorage.getItem("role");
   let id;
@@ -25,6 +26,13 @@ const Navbar = () => {
     const getId = jwt_decode(token);
     id = getId.id;
   }
+
+  const handleSearch = () => {
+    navigate({
+      pathname: "/search",
+      search: `?search=${search}`,
+    });
+  };
 
   const handleCariClick = () => {
     setShowSearch(!showSearch);
@@ -83,7 +91,7 @@ const Navbar = () => {
           </label>
         </div>
         <img
-          src={search}
+          src={searchIcon}
           alt="search-icon"
           className="lg:hidden w-8"
           onClick={handleCariClick}
@@ -97,10 +105,14 @@ const Navbar = () => {
             type="search"
             placeholder="Search"
             className="focus:outline-none w-10/12"
+            onChange={(e) => setSearch(e.target.value)}
           />
-          <div className="bg-gray-200 w-7 absolute top-0 w-[48px] h-[40px] right-0 rounded-r-full p-2 hover:bg-gray-300 transition-all cursor-pointer">
+          <div
+            className="bg-gray-200 w-7 absolute top-0 w-[48px] h-[40px] right-0 rounded-r-full p-2 hover:bg-gray-300 transition-all cursor-pointer"
+            onClick={handleSearch}
+          >
             <img
-              src={search}
+              src={searchIcon}
               alt="search-icon"
               className="w-8 absolute right-[10px] top-1"
             />
@@ -117,15 +129,17 @@ const Navbar = () => {
 
           {token ? (
             <div className="flex gap-5 flex-col sm:items-center mt-24 sm:flex-row sm:mt-0">
-              <Link to="/checkout" className="flex gap-2">
-                <div className="relative">
-                  <img src={shopping} alt="shop" />
-                  <div className="absolute bg-red-600 text-white px-1.5 rounded-full text-sm -top-2 -right-4">
-                    <p>{items.length}</p>
+              {chooseRole === "customer" && (
+                <Link to="/checkout" className="flex gap-2">
+                  <div className="relative">
+                    <img src={shopping} alt="shop" />
+                    <div className="absolute bg-red-600 text-white px-1.5 rounded-full text-sm -top-2 -right-4">
+                      <p>{items.length}</p>
+                    </div>
                   </div>
-                </div>
-                <p className="sm:hidden">Cart</p>
-              </Link>
+                  <p className="sm:hidden">Cart</p>
+                </Link>
+              )}
               <div className="flex gap-2">
                 <div>
                   <img src={bell} alt="bell" />

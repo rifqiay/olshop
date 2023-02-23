@@ -3,8 +3,19 @@ import gopay from "../../../asset/icon/gopay.png";
 import pos from "../../../asset/icon/pos.png";
 import mastercard from "../../../asset/icon/mastercard.png";
 import Button from "../../base/button";
+import { useDispatch } from "react-redux";
+import { addOrder } from "../../../config/features/order/orderSlice";
 
-const ModalPayment = ({ visible, onClose }) => {
+const ModalPayment = ({ visible, onClose, total, delivery, id, toast }) => {
+  const dispatch = useDispatch();
+
+  const data = {
+    customerId: id,
+  };
+  const handleBuy = () => {
+    dispatch(addOrder({ data, onClose, toast }));
+  };
+
   if (!visible) return null;
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -77,22 +88,25 @@ const ModalPayment = ({ visible, onClose }) => {
           <h5 className="text-lg">Shopping summary</h5>
           <div className="flex justify-between items-center mt-2">
             <p className="text-gray-500 text-lg">Order</p>
-            <p className="text-bold">$ 40.0</p>
+            <p className="text-bold">$ {total}</p>
           </div>
           <div className="flex justify-between items-center mt-1">
             <p className="text-gray-500 text-lg">Delivery</p>
-            <p className="text-bold">$ 5.0</p>
+            <p className="text-bold">$ {delivery}</p>
           </div>
         </div>
 
         <div className="border-t  p-4 flex justify-between mt-20 item-center">
           <div>
             <p className="font-medium text-lg">Shopping summary</p>
-            <p className="text-red-500 font-medium text-lg">$ 45.0</p>
+            <p className="text-red-500 font-medium text-lg">
+              $ {total + delivery}
+            </p>
           </div>
           <Button
             name="Buy"
             className="bg-red-600  rounded-full w-32 h-[41px] text-white hover:bg-red-500 transition-all"
+            onClick={handleBuy}
           />
         </div>
       </div>

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import cartorder from "../../asset/icon/cart-order.png";
+// import cartorder from "../../asset/icon/cart-order.png";
 import Button from "../../components/base/button";
 import product from "../../asset/icon/product.png";
 import store from "../../asset/icon/store.png";
 import img from "../../asset/img/img.jpeg";
-import AccordionOrder from "../../components/base/accordion-order/AccordionOrder";
+// import AccordionOrder from "../../components/base/accordion-order/AccordionOrder";
 import AccordionProduct from "../../components/base/accordion-product/AccordionProduct";
 import AccordionStore from "../../components/base/accordion-store/AccordionStore";
-import MyOrderSeller from "../../components/module/my-order-seller/MyOrderSeller";
+// import MyOrderSeller from "../../components/module/my-order-seller/MyOrderSeller";
 import MyProduct from "../../components/module/my-product/MyProduct";
 import MyStore from "../../components/module/my-store/MyStore";
 import Navbar from "../../components/module/navbar/Navbar";
@@ -106,7 +106,7 @@ const Seller = () => {
                   setActiveTab={setActiveTab}
                 />
               </div>
-              <div className="flex gap-3 cursor-pointer">
+              {/* <div className="flex gap-3 cursor-pointer">
                 <AccordionOrder
                   icon={cartorder}
                   title="Order"
@@ -114,7 +114,7 @@ const Seller = () => {
                   activeTab={activeTab}
                   setActiveTab={setActiveTab}
                 />
-              </div>
+              </div> */}
             </div>
             <Button
               name="log out"
@@ -134,9 +134,11 @@ const Seller = () => {
               seller={seller[0]}
             />
           )}
-          {activeTab === "tab2" && <MyProduct id={id} />}
+          {activeTab === "tab2" && (
+            <MyProduct id={id} toast={toast} ToastContainer={ToastContainer} />
+          )}
           {activeTab === "tab3" && <SellingProduct id={id} />}
-          {activeTab === "tab4" && <MyOrderSeller />}
+          {/* {activeTab === "tab4" && <MyOrderSeller />} */}
         </div>
       </div>
     </>
