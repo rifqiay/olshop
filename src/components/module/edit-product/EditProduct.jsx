@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DOMPurify from "dompurify";
 import {
   addProduct,
+  editProduct,
   getProductById,
 } from "../../../config/features/product/productSlice";
 import { ToastContainer, toast } from "react-toastify";
@@ -130,24 +131,24 @@ const EditProduct = () => {
     photo.map((item) => {
       formData.append("photo", item);
     });
-    // setLoading(true);
-    // dispatch(addProduct({ formData, setLoading, toast }));
-    // setData({
-    //   name: "",
-    //   price: "",
-    //   stock: "",
-    //   color: "",
-    //   size: "",
-    //   condition: "",
-    //   description: "",
-    //   categoryId: "",
-    // });
-    // setDescription("");
-    // setPhoto(null);
+    setLoading(true);
+    dispatch(editProduct({ id, setLoading, toast, formData }));
+    setData({
+      name: "",
+      price: "",
+      stock: "",
+      color: "",
+      size: "",
+      condition: "",
+      description: "",
+      categoryId: "",
+    });
+    setDescription("");
+    setPhoto(null);
 
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
-    }
+    // for (const [key, value] of formData.entries()) {
+    //   console.log(`${key}: ${value}`);
+    // }
   };
 
   return (
@@ -264,7 +265,7 @@ const EditProduct = () => {
           <div>
             <div
               className="w-11/12 mx-auto gap-3 border-dashed rounded-lg p-5
-       mb-5 border-2 border-gray-300 flex items-center"
+       mb-5 border-2 border-gray-300 flex items-center "
             >
               {previews?.map((item, index) => (
                 <Fragment key={index}>

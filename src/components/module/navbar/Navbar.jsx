@@ -44,23 +44,30 @@ const Navbar = () => {
   const { customer } = useSelector((state) => state.auth);
   const { items } = useSelector((state) => state.cart);
 
-  if (customer) {
+  // console.log(seller);
+  if (chooseRole === "customer") {
     if (customer[0]?.photo) {
       const photo = customer[0].photo.split(",");
-      imgProfile = photo[photo.length - 1];
+      imgProfile = photo[1];
     }
-  }
-  if (seller) {
+  } else {
     if (seller[0]?.photo) {
       const photo = seller[0].photo.split(",");
       imgProfile = photo[photo.length - 1];
     }
   }
 
+  // if (seller) {
+  //   if (seller[0]?.photo) {
+  //     const photo = seller[0].photo.split(",");
+  //     imgProfile = photo[photo.length - 1];
+  //   }
+  // }
+
   useEffect(() => {
     if (token && chooseRole === "seller") {
       dispatch(getSeller(id));
-    } else if (token) {
+    } else if (token && chooseRole === "customer") {
       dispatch(getCustomer(id));
     }
   }, [chooseRole, dispatch, id, token]);

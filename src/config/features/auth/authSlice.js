@@ -61,6 +61,7 @@ export const loginCustomer = createAsyncThunk(
     try {
       const result = await api.post("/auth/customer/login", values);
       localStorage.setItem("token", result.data.data.token);
+      localStorage.setItem("role", "customer");
       toast.success(result.data.message);
       setTimeout(() => {
         navigate("/");

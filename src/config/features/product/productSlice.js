@@ -108,6 +108,27 @@ export const removeProduct = createAsyncThunk(
   }
 );
 
+export const editProduct = createAsyncThunk(
+  "product/editProduct",
+  async ({ id, setLoading, toast, formData }) => {
+    try {
+      const result = await api.put(`/product/edit/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      setLoading(false);
+      console.log(result);
+      toast.success(result.data.message);
+      return result.data.message;
+    } catch (error) {
+      setLoading(false);
+      toast.error(error.response.message);
+      console.log(error);
+    }
+  }
+);
+
 const productSlice = createSlice({
   name: "product",
   initialState: {
@@ -119,6 +140,7 @@ const productSlice = createSlice({
     recent: [],
     message: "",
     searchItems: [],
+    editMessage: "",
   },
   extraReducers: (builder) => {
     builder.addCase(getNewProduct.fulfilled, (state, action) => {
@@ -144,6 +166,9 @@ const productSlice = createSlice({
     });
     builder.addCase(getSearch.fulfilled, (state, action) => {
       state.searchItems = action.payload;
+    });
+    builder.addCase(editProduct.fulfilled, (state, action) => {
+      state.editMessage = action.payload;
     });
   },
 });
