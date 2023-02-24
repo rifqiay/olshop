@@ -31,7 +31,7 @@ const MyProduct = ({ id, toast }) => {
         <h1 className="text-2xl font-medium">My product</h1>
         <div className="flex gap-10 text-slate-500 mt-5">
           <h5 className="text-red-600 underline font-semibold cursor-pointer">
-            All items ({myProducts.length})
+            All items ({myProducts?.length})
           </h5>
           <h5 className="cursor-pointer">Sould out</h5>
           <h5 className="cursor-pointer">Archived</h5>
@@ -62,7 +62,7 @@ const MyProduct = ({ id, toast }) => {
               </tr>
             </thead>
             <tbody>
-              {myProducts.map((item, index) => (
+              {myProducts?.map((item, index) => (
                 <tr
                   key={index}
                   className={index % 2 === 1 ? "bg-gray-100" : "bg-gray-200"}

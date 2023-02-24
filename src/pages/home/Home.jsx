@@ -14,7 +14,11 @@ import { getCart } from "../../config/features/cart/CartSlice";
 const Home = () => {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
-  const { id } = jwt_decode(token);
+  let id;
+  if (token) {
+    const getId = jwt_decode(token);
+    id = getId.id;
+  }
 
   const { items } = useSelector((state) => state.product);
   const { all } = useSelector((state) => state.product);
@@ -69,7 +73,7 @@ const Home = () => {
           </p>
         </div>
         <div
-          className="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5"
+          className="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 mb-20"
           data-aos="fade-up"
         >
           {all.map((item, index) => {
@@ -82,6 +86,7 @@ const Home = () => {
                 store={item.storename}
                 img={linkPhoto}
                 key={index}
+                id={item.id_product}
               />
             );
           })}

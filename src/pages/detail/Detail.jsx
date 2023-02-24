@@ -227,7 +227,7 @@ const Detail = () => {
           <p className="text-sm text-slate-500">You've never seen it before!</p>
         </div>
         <div
-          className="grid gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
+          className="grid gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 mb-20"
           data-aos="fade-up"
         >
           {recent?.map((item, index) => {
@@ -246,13 +246,6 @@ const Detail = () => {
           })}
         </div>
       </div>
-      {/* {loading ? (
-        <>
-          <p>loading</p>
-        </>
-      ) : (
-        
-      )} */}
     </>
   );
 };

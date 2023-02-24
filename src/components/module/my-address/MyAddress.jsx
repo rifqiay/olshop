@@ -67,29 +67,6 @@ const MyAddress = () => {
               name="Set primary address"
               className="text-red-600 font-medium mt-5 cursor-pointer hover:underline transition-all"
             />
-            // <div
-            //   className={
-            //     item.primaryaddress
-            //       ? "mt-10 border-2 border-blue-500 rounded-md p-5"
-            //       : "mt-10 border-2 border-red-500 rounded-md p-5"
-            //   }
-            //   key={index}
-            // >
-            //   <h4 className="text-xl font-medium ">{item.recipientname}</h4>
-            //   <p className="mt-2">
-            //     {item.fulladdress}, {item.city}, {item.poscode}
-            //     {item.recipientphonenumber}
-            //   </p>
-            //   <Button
-            //     name="Set primary address"
-            //     className="text-red-600 font-medium mt-5 cursor-pointer hover:underline transition-all"
-            //     disable={item.primaryaddress}
-            //     onClick={() => {
-            //       setLoading(true);
-            //       dispatch(setPrimaryAddress({ data, toast, setLoading }));
-            //     }}
-            //   />
-            // </div>
           );
         })}
       </div>

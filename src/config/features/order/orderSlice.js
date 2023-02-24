@@ -3,13 +3,15 @@ import { api } from "../../api";
 
 export const addOrder = createAsyncThunk(
   "order/addOrder",
-  async ({ data, onClose, toast }) => {
+  async ({ data, onClose, toast, setLoading }) => {
     try {
       const result = await api.post(`/orders`, data);
       onClose();
       toast.success(result.data.message);
+      setLoading(false);
       return result.data.message;
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   }

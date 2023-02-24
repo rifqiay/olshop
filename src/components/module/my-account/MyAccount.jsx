@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Input from "../../base/input/Input";
 import Button from "../../base/button";
-import img from "../../../asset/img/img.jpeg";
+import img from "../../../asset/icon/default-profile.svg";
 import SelectDay from "../../base/select-day/SelectDay";
 import SelectMonth from "../../base/select-mont/SelectMonth";
 import SelectYears from "../../base/select-years/SelectYears";
@@ -14,6 +14,7 @@ const MyAccount = ({
   setPhoto,
   birt,
   imgProfile,
+  loading,
 }) => {
   const [prevImg, setPrevImg] = useState(null);
 
@@ -140,11 +141,18 @@ const MyAccount = ({
                 <SelectYears handleBirth={handleBirth} birt={birt} />
               </div>
             </div>
-            <Button
-              name="Save"
-              type="submit"
-              className="bg-red-500 text-white px-8 py-2  mt-10 lg:ml-0 mb-5 rounded-full hover:bg-red-600 transition-all block ml-auto"
-            />
+            {loading ? (
+              <button className="bg-red-500 text-white px-8 py-2  mt-10 lg:ml-0 mb-5 rounded-full hover:bg-red-600 transition-all block ml-auto flex justify-center items-center gap-2">
+                Save
+                <div class="h-5 w-5 border-2 rounded-full border-l-0 border-b-0 animate-spin"></div>
+              </button>
+            ) : (
+              <Button
+                name="Save"
+                type="submit"
+                className="bg-red-500 text-white px-8 py-2  mt-10 lg:ml-0 mb-5 rounded-full hover:bg-red-600 transition-all block ml-auto"
+              />
+            )}
           </form>
         </div>
       </div>

@@ -17,6 +17,7 @@ import {
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [active, setActive] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -34,10 +35,11 @@ const Login = () => {
       password: "",
     },
     onSubmit: () => {
+      setLoading(true);
       if (active) {
-        dispatch(loginCustomer({ values, navigate, toast }));
+        dispatch(loginCustomer({ values, navigate, toast, setLoading }));
       } else {
-        dispatch(loginSeller({ values, navigate, toast }));
+        dispatch(loginSeller({ values, navigate, toast, setLoading }));
       }
       handleReset();
     },
@@ -99,11 +101,21 @@ const Login = () => {
               />
             </div>
             <p className="mt-5 text-end">Forgot password?</p>
-            <Button
-              name="Login"
-              type="submit"
-              className="bg-[#DB3022] p-3 w-full text-white mt-5 rounded-full hover:bg-[#f43928] transition-all"
-            />
+            {loading ? (
+              <button
+                className="bg-[#DB3022] p-3 w-full text-white mt-5 rounded-full hover:bg-[#f43928] flex justify-center items-center gap-2"
+                disabled
+              >
+                login
+                <div class="h-5 w-5 border-2 rounded-full border-l-0 border-b-0 animate-spin"></div>
+              </button>
+            ) : (
+              <Button
+                name="Login"
+                type="submit"
+                className="bg-[#DB3022] p-3 w-full text-white mt-5 rounded-full hover:bg-[#f43928] transition-all"
+              />
+            )}
           </form>
           <p className="mt-10 text-center">
             Dont't have Blanja account?{" "}

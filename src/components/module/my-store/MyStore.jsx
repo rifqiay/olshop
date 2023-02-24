@@ -9,6 +9,7 @@ const MyStore = ({
   handleSubmit,
   setPhoto,
   imgProfile,
+  loading,
 }) => {
   const [prevImg, setPrevImg] = useState(null);
 
@@ -94,12 +95,23 @@ const MyStore = ({
                 onChange={handleChange}
               ></textarea>
             </div>
-
-            <Button
+            {loading ? (
+              <button className="bg-red-500 text-white px-8 py-2  mt-10 lg:ml-0 mb-5 rounded-full hover:bg-red-600 transition-all block ml-auto flex justify-center items-center gap-2">
+                Save
+                <div class="h-5 w-5 border-2 rounded-full border-l-0 border-b-0 animate-spin"></div>
+              </button>
+            ) : (
+              <Button
+                name="Save"
+                type="submit"
+                className="bg-red-500 text-white px-8 py-2  mt-10 lg:ml-0 mb-5 rounded-full hover:bg-red-600 transition-all block ml-auto"
+              />
+            )}
+            {/* <Button
               name="Save"
               type="submit"
               className="bg-red-500 text-white px-8 py-2 ml-40 mt-10 rounded-full hover:bg-red-600 transition-all"
-            />
+            /> */}
           </form>
         </div>
         <div>

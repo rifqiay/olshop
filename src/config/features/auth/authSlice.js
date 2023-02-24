@@ -3,22 +3,24 @@ import { api } from "../../api/index";
 
 export const registerSeller = createAsyncThunk(
   "seller/register",
-  async ({ values, navigate, toast }) => {
+  async ({ values, navigate, toast, setLoading }) => {
     try {
       const result = await api.post("/auth/seller/register", values);
       toast.success(result.data.message);
       setTimeout(() => {
         navigate("/login");
       }, 2500);
+      setLoading(false);
       return result.data.message;
     } catch (error) {
+      setLoading(false);
       toast.error(error.response.data.message);
     }
   }
 );
 export const loginSeller = createAsyncThunk(
   "seller/login",
-  async ({ values, navigate, toast }) => {
+  async ({ values, navigate, toast, setLoading }) => {
     try {
       const result = await api.post("/auth/seller/login", values);
       localStorage.setItem("token", result.data.data.token);
@@ -27,12 +29,14 @@ export const loginSeller = createAsyncThunk(
       setTimeout(() => {
         navigate("/");
       }, 2500);
+      setLoading(false);
       const payload = {
         message: result.data.message,
         role: result.data.data.role,
       };
       return payload;
     } catch (error) {
+      setLoading(false);
       toast.error(error.response.data.message);
     }
   }
@@ -41,7 +45,7 @@ export const loginSeller = createAsyncThunk(
 // customer
 export const registerCustomer = createAsyncThunk(
   "customer/register",
-  async ({ customer, navigate, toast }) => {
+  async ({ customer, navigate, toast, setLoading }) => {
     try {
       const result = await api.post("/auth/customer/register", customer);
       console.log(result);
@@ -49,15 +53,17 @@ export const registerCustomer = createAsyncThunk(
       setTimeout(() => {
         navigate("/login");
       }, 2500);
+      setLoading(false);
       return result.data.message;
     } catch (error) {
+      setLoading(false);
       toast.error(error.response.data.message);
     }
   }
 );
 export const loginCustomer = createAsyncThunk(
   "customer/login",
-  async ({ values, navigate, toast }) => {
+  async ({ values, navigate, toast, setLoading }) => {
     try {
       const result = await api.post("/auth/customer/login", values);
       localStorage.setItem("token", result.data.data.token);
@@ -66,8 +72,10 @@ export const loginCustomer = createAsyncThunk(
       setTimeout(() => {
         navigate("/");
       }, 2500);
+      setLoading(false);
       return result.data.message;
     } catch (error) {
+      setLoading(false);
       toast.error(error.response.data.message);
     }
   }
@@ -105,6 +113,7 @@ export const editSeller = createAsyncThunk(
       setLoading(false);
       return result.data.message;
     } catch (error) {
+      setLoading(false);
       toast.error(error.response.data.message);
     }
   }
@@ -122,6 +131,7 @@ export const editCustomer = createAsyncThunk(
       setLoading(false);
       return result.data.message;
     } catch (error) {
+      setLoading(false);
       toast.error(error.response.data.message);
       // console.log(error);
     }

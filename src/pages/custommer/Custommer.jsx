@@ -3,7 +3,7 @@ import Button from "../../components/base/button";
 import MyAccount from "../../components/module/my-account/MyAccount";
 import MyAddress from "../../components/module/my-address/MyAddress";
 import MyOrder from "../../components/module/my-order/MyOrder";
-import img from "../../asset/img/img.jpeg";
+import img from "../../asset/icon/default-profile.svg";
 import imyaccount from "../../asset/icon/my-account.png";
 import imaps from "../../asset/icon/maps.png";
 import imyorder from "../../asset/icon/my-order.png";
@@ -30,11 +30,11 @@ const Custommer = () => {
   const [activeTab, setActiveTab] = useState("tab1");
   let myBirth;
   const { customer } = useSelector((state) => state.auth);
-  myBirth = customer[0]?.birth.split(" ");
+  myBirth = customer[0]?.birth?.split(" ");
   const [birt, setBirth] = useState({
-    day: myBirth[0] || "",
-    month: myBirth[1] || "",
-    year: myBirth[2] || "",
+    day: myBirth ? myBirth[0] : "",
+    month: myBirth ? myBirth[1] : "",
+    year: myBirth ? myBirth[2] : "",
   });
 
   // console.log(myBirth[0]);
@@ -84,8 +84,10 @@ const Custommer = () => {
   });
   let imgProfile;
   if (customer.length !== 0) {
-    const imgLink = customer[0]?.photo.split(",");
-    imgProfile = imgLink[imgLink?.length - 1];
+    const imgLink = customer[0]?.photo?.split(",");
+    if (imgLink) {
+      imgProfile = imgLink[imgLink?.length - 1];
+    }
   }
   return (
     <>
@@ -162,6 +164,7 @@ const Custommer = () => {
               setPhoto={setPhoto}
               birt={birt}
               imgProfile={imgProfile}
+              loading={loading}
             />
           )}
           {activeTab === "tab2" && <MyAddress />}

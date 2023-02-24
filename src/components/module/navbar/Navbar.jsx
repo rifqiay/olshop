@@ -6,7 +6,7 @@ import bell from "../../../asset/icon/bell.svg";
 // import filter from "../../../asset/icon/filter.svg";
 import mail from "../../../asset/icon/mail.svg";
 import shopping from "../../../asset/icon/shopping-cart .svg";
-import img from "../../../asset/img/img.jpeg";
+import img from "../../../asset/icon/default-profile.svg";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getCustomer,
@@ -50,7 +50,7 @@ const Navbar = () => {
       const photo = customer[0].photo.split(",");
       imgProfile = photo[1];
     }
-  } else {
+  } else if (chooseRole === "seller") {
     if (seller[0]?.photo) {
       const photo = seller[0].photo.split(",");
       imgProfile = photo[photo.length - 1];

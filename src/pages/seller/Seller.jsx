@@ -33,8 +33,10 @@ const Seller = () => {
   // console.log(seller[0].photo.split(","));
   let imgProfile;
   if (seller.length !== 0) {
-    const imgLink = seller[0]?.photo.split(",");
-    imgProfile = imgLink[imgLink?.length - 1];
+    const imgLink = seller[0]?.photo?.split(",");
+    if (imgLink) {
+      imgProfile = imgLink[imgLink?.length - 1];
+    }
   }
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -132,6 +134,7 @@ const Seller = () => {
               setPhoto={setPhoto}
               imgProfile={imgProfile}
               seller={seller[0]}
+              loading={loading}
             />
           )}
           {activeTab === "tab2" && (

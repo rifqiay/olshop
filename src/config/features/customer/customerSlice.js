@@ -35,6 +35,7 @@ export const setPrimaryAddress = createAsyncThunk(
       setLoading(false);
       return result.data.message;
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   }

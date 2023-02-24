@@ -16,6 +16,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [active, setActive] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -41,10 +42,11 @@ const Register = () => {
         email: values.email,
         password: values.password,
       };
+      setLoading(true);
       if (active) {
-        dispatch(registerCustomer({ customer, navigate, toast }));
+        dispatch(registerCustomer({ customer, navigate, toast, setLoading }));
       } else {
-        dispatch(registerSeller({ values, navigate, toast }));
+        dispatch(registerSeller({ values, navigate, toast, setLoading }));
       }
       handleReset();
     },
@@ -96,11 +98,21 @@ const Register = () => {
               />
             )}
             <p className="mt-5 text-end">Forgot password?</p>
-            <Button
-              name="Register"
-              type="submit"
-              className="bg-[#DB3022] p-3 w-full text-white mt-5 rounded-full hover:bg-[#f43928] transition-all"
-            />
+            {loading ? (
+              <button
+                className="bg-[#DB3022] p-3 w-full text-white mt-5 rounded-full hover:bg-[#f43928] flex justify-center items-center gap-2"
+                disabled
+              >
+                Register
+                <div class="h-5 w-5 border-2 rounded-full border-l-0 border-b-0 animate-spin"></div>
+              </button>
+            ) : (
+              <Button
+                name="Register"
+                type="submit"
+                className="bg-[#DB3022] p-3 w-full text-white mt-5 rounded-full hover:bg-[#f43928] transition-all"
+              />
+            )}
           </form>
           <p className="mt-10 text-center">
             Already have Blanja account?{" "}

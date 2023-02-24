@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import gopay from "../../../asset/icon/gopay.png";
 import pos from "../../../asset/icon/pos.png";
 import mastercard from "../../../asset/icon/mastercard.png";
@@ -8,12 +8,14 @@ import { addOrder } from "../../../config/features/order/orderSlice";
 
 const ModalPayment = ({ visible, onClose, total, delivery, id, toast }) => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
   const data = {
     customerId: id,
   };
   const handleBuy = () => {
-    dispatch(addOrder({ data, onClose, toast }));
+    setLoading(true);
+    dispatch(addOrder({ data, onClose, toast, setLoading }));
   };
 
   if (!visible) return null;
@@ -103,11 +105,22 @@ const ModalPayment = ({ visible, onClose, total, delivery, id, toast }) => {
               $ {total + delivery}
             </p>
           </div>
-          <Button
-            name="Buy"
-            className="bg-red-600  rounded-full w-32 h-[41px] text-white hover:bg-red-500 transition-all"
-            onClick={handleBuy}
-          />
+
+          {loading ? (
+            <button
+              className="bg-red-400  rounded-full w-32 h-[41px] text-white flex justify-center items-center gap-2"
+              disabled
+            >
+              Buy
+              <div class="h-5 w-5 border-2 rounded-full border-l-0 border-b-0 animate-spin"></div>
+            </button>
+          ) : (
+            <Button
+              name="Buy"
+              className="bg-red-600  rounded-full w-32 h-[41px] text-white hover:bg-red-500 transition-all"
+              onClick={handleBuy}
+            />
+          )}
         </div>
       </div>
     </div>
