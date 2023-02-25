@@ -74,6 +74,7 @@ const Search = () => {
                   store={item.storename}
                   img={linkPhoto}
                   key={index}
+                  id={item.id_product}
                 />
               );
             })}

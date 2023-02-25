@@ -1,70 +1,156 @@
-# Getting Started with Create React App
+<div align="center">
+<img src="https://i.postimg.cc/52xG205r/blanja.png" width="150px" height="100px" cover />
+ </div>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<div align="center">
+<br />
 
-## Available Scripts
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff69b4.svg?style=flat-square)](https://github.com/rifqiay)
+[![made with hearth by Muhammad Rifqi Ainul Yaqin](https://img.shields.io/badge/made%20with%20%E2%99%A5%20by-Rifqi-ff1414.svg?style=flat-square)](https://github.com/rifqiay)
 
-In the project directory, you can run:
+</div>
 
-### `yarn start`
+# Blanja
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+React Redux Toolkit Web Application with Tailwind CSS
+This README is a guide for a web application built using React JS as the main library, Redux Toolkit as the state management, and Tailwind CSS as the UI framework. This application aims to provide optimal user experience in utilizing the provided features.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## System Requirements
 
-### `yarn test`
+Before running this application, make sure that the system used meets the following requirements: the latest version of Node.js, React JS, and Redux Toolkit are installed, and a code editor such as Visual Studio Code is available.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `yarn build`
+Clone the project
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+  git clone https://github.com/rifqiay/olshop.git
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Go to the project directory
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+  cd olshop
+```
 
-### `yarn eject`
+Install dependencies
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+  npm install or yarn install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Start the server
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+  npm run dev or yarn start
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Environment Variables
 
-## Learn More
+To run this project, you will need to add the following environment variables to your .env file
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+REACT_APP_API_BACKEND=
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Development
 
-### Code Splitting
+Want to contribute? Great!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+To fix a bug or enhance an existing module, follow these steps:
 
-### Analyzing the Bundle Size
+- Fork the repo
+- Create a new branch (`git checkout -b improve-olshop`)
+- Make the appropriate changes in the files
+- Add changes to reflect the changes made
+- Commit your changes (`git commit -m 'Improve olshop'`)
+- Push to the branch (`git push origin improve-olshop`)
+- Create a Pull Request
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Screenshot
 
-### Making a Progressive Web App
+<table>
+<tr>
+<td><image src="./screenshot/login.png" alt="login page" width=100%/></td>
+<td><image src="./screenshot/login-2.png" alt="login page" width=100%/></td>
+</tr>
+<tr>
+<td align='center'>login</td>
+<td align='center'>login</td>
+</tr>
+<tr>
+<td><image src="./screenshot/register.png" alt="register page" width=100%/></td>
+<td><image src="./screenshot/register-2.png" alt="register page" width=100%/></td>
+</tr>
+<tr>
+<td align='center'>Regiser</td>
+<td align='center'>Regiser</td>
+</tr>
+<tr>
+<td><image src="./screenshot/home.png" alt="home page" width=100%/></td>
+<td><image src="./screenshot/product-detail.png" alt="product detail page" width=100%/></td>
+</tr>
+<tr>
+<td align='center'>Home page</td>
+<td align='center'>Product detail</td>
+</tr>
+<tr>
+<td><image src="./screenshot/search-page.png" alt="search-page page" width=100%/></td>
+<td><image src="./screenshot/search-not-found-product.png" alt="search-not-found-product page" width=100%/></td>
+</tr>
+<tr>
+<td align='center'>Search page</td>
+<td align='center'>Search not found product</td>
+</tr>
+<tr>
+<td><image src="./screenshot/cart.png" alt="cart page" width=100%/></td>
+<td><image src="./screenshot/select-payment.png" alt="select-payment" width=100%/></td>
+</tr>
+<tr>
+<td align='center'>Cart</td>
+<td align='center'>Select payment</td>
+</tr>
+<tr>
+<td><image src="./screenshot/my-profile.png" alt="my-profile page" width=100%/></td>
+<td><image src="./screenshot/my-order.png" alt="my-order" width=100%/></td>
+</tr>
+<tr>
+<td align='center'>My profile customer</td>
+<td align='center'>My order</td>
+</tr>
+<tr>
+<td><image src="./screenshot/my-address.png" alt="my-address page" width=100%/></td>
+<td><image src="./screenshot/category.png" alt="category" width=100%/></td>
+</tr>
+<tr>
+<td align='center'>My address</td>
+<td align='center'>Category</td>
+</tr>
+<tr>
+<td><image src="./screenshot/store-profile.png" alt="store-profile page" width=100%/></td>
+<td><image src="./screenshot/my-product.png" alt="my-product" width=100%/></td>
+</tr>
+<tr>
+<td align='center'>Store profile</td>
+<td align='center'>My product</td>
+</tr>
+<tr>
+<td><image src="./screenshot/selling-product-1.png" alt="selling-product-1 page" width=100%/></td>
+<td><image src="./screenshot/selling-product-2.png" alt="selling-product-2" width=100%/></td>
+</tr>
+<tr>
+<td align='center'>Selling Product</td>
+<td align='center'>Selling Product</td>
+</tr>
+</table>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Related Project
 
-### Advanced Configuration
+**:rocket: [`Demo blanja`](https://olshop-kappa.vercel.app)**
+**:rocket: [`Backend Blanja`](https://github.com/rifqiay/olshop-BE)**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Contact
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Muhammad Rifqi Ainul Yaqin
+[linkedin](www.linkedin.com/in/rifqiay)
+[email](mrifqiay@gmail.com)

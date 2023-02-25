@@ -9,7 +9,6 @@ const Category = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { byId } = useSelector((state) => state.categories);
-  console.log(byId);
 
   useEffect(() => {
     window.scrollTo(0, 0);

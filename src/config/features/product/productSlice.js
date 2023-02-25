@@ -24,7 +24,6 @@ export const getSearch = createAsyncThunk(
       const result = await api.get(
         `/product?${searchParams}&page=${currentPage}`
       );
-      console.log(result);
       setTotalPage(result.data.pagination.totalPage);
       setData(result.data.data);
       return result.data.data;
@@ -69,10 +68,11 @@ export const addProduct = createAsyncThunk(
 // detail product
 export const getProductById = createAsyncThunk(
   "product/getProductById",
-  async ({ id, setLoading }) => {
+  async ({ id, setLoading, setIdCategory }) => {
     try {
       const result = await api.get(`/product/${id}`);
       setLoading(false);
+      setIdCategory(result.data.data[0].categoryid);
       return result.data.data;
     } catch (error) {
       console.log(error);
@@ -82,9 +82,10 @@ export const getProductById = createAsyncThunk(
 // recent product
 export const getProductByIdCategory = createAsyncThunk(
   "product/getProductByIdCategory",
-  async (idCategory) => {
+  async ({ idCategory, setLoading }) => {
     try {
       const result = await api.get(`/product/category/${idCategory}`);
+      setLoading(false);
       return result.data.data;
     } catch (error) {
       console.log(error);

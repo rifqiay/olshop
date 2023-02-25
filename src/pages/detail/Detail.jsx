@@ -22,6 +22,7 @@ const Detail = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(1);
+  const [idCategory, setIdCategory] = useState();
   const navigate = useNavigate();
   const { id } = useParams();
   const token = localStorage.getItem("token");
@@ -60,15 +61,14 @@ const Detail = () => {
     customerId: idCustomer,
     quantity: count,
   };
-  const idCategory = item[0]?.categoryid;
   useEffect(() => {
     window.scrollTo(0, 0);
     setLoading(true);
-    dispatch(getProductById({ id, setLoading }));
+    dispatch(getProductById({ id, setLoading, setIdCategory }));
   }, [id, dispatch]);
 
   useEffect(() => {
-    dispatch(getProductByIdCategory(idCategory));
+    dispatch(getProductByIdCategory({ idCategory, setLoading }));
   }, [dispatch, idCategory]);
 
   useEffect(() => {
@@ -230,20 +230,24 @@ const Detail = () => {
           className="grid gap-5 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 mb-20"
           data-aos="fade-up"
         >
-          {recent?.map((item, index) => {
-            const photo = item.photo0.split(",");
-            const linkPhoto = photo[photo.length - 1];
-            return (
-              <Card
-                name={item.name}
-                price={item.price}
-                store={item.storename}
-                img={linkPhoto}
-                key={index}
-                id={item.id_product}
-              />
-            );
-          })}
+          {loading ? (
+            <p>loading</p>
+          ) : (
+            recent.map((item, index) => {
+              const photo = item.photo0.split(",");
+              const linkPhoto = photo[photo.length - 1];
+              return (
+                <Card
+                  name={item.name}
+                  price={item.price}
+                  store={item.storename}
+                  img={linkPhoto}
+                  key={index}
+                  id={item.id}
+                />
+              );
+            })
+          )}
         </div>
       </div>
     </>

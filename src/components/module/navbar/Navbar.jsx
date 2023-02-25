@@ -27,7 +27,8 @@ const Navbar = () => {
     id = getId.id;
   }
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    e.preventDefault();
     navigate({
       pathname: "/search",
       search: `?search=${search}`,
@@ -56,13 +57,6 @@ const Navbar = () => {
       imgProfile = photo[photo.length - 1];
     }
   }
-
-  // if (seller) {
-  //   if (seller[0]?.photo) {
-  //     const photo = seller[0].photo.split(",");
-  //     imgProfile = photo[photo.length - 1];
-  //   }
-  // }
 
   useEffect(() => {
     if (token && chooseRole === "seller") {
@@ -108,22 +102,24 @@ const Navbar = () => {
             showSearch ? "" : "hidden"
           }`}
         >
-          <input
-            type="search"
-            placeholder="Search"
-            className="focus:outline-none w-10/12"
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <div
-            className="bg-gray-200 w-7 absolute top-0 w-[48px] h-[40px] right-0 rounded-r-full p-2 hover:bg-gray-300 transition-all cursor-pointer"
-            onClick={handleSearch}
-          >
-            <img
-              src={searchIcon}
-              alt="search-icon"
-              className="w-8 absolute right-[10px] top-1"
+          <form onSubmit={handleSearch}>
+            <input
+              type="search"
+              placeholder="Search"
+              className="focus:outline-none w-10/12"
+              onChange={(e) => setSearch(e.target.value)}
             />
-          </div>
+            <div
+              className="bg-gray-200 w-7 absolute top-0 w-[48px] h-[40px] right-0 rounded-r-full p-2 hover:bg-gray-300 transition-all cursor-pointer"
+              onClick={handleSearch}
+            >
+              <img
+                src={searchIcon}
+                alt="search-icon"
+                className="w-8 absolute right-[10px] top-1"
+              />
+            </div>
+          </form>
         </div>
         <input type="checkbox" id="cek" className="peer hidden" />
         <div className="flex flex-col lg:grow items-center sm:justify-around gap-5 absolute left-0 top-0 -translate-x-[33rem] peer-checked:translate-x-0 transition duration-500 h-screen bg-white shadow-2xl w-10/12 p-5 sm:translate-x-0 sm:w-auto sm:flex-row sm:static sm:h-auto sm:bg-inherit sm:shadow-none z-50">
